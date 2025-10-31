@@ -16,10 +16,42 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [errors, setErrors] = useState({});
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Le nom est requis';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'L\'email est requis';
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Email invalide';
+    }
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Le sujet est requis';
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = 'Le message est requis';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast({
+        title: "Erreur de validation",
+        description: "Veuillez remplir tous les champs obligatoires correctement.",
+      });
+      return;
+    }
+
+    setErrors({});
     const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
     contacts.push({
       ...formData,
@@ -130,9 +162,10 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="mt-2"
+                  className={`mt-2 ${errors.name ? 'border-red-500' : ''}`}
                   placeholder="Votre nom"
                 />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
               <div>
@@ -144,9 +177,10 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="mt-2"
+                  className={`mt-2 ${errors.email ? 'border-red-500' : ''}`}
                   placeholder="votre@email.com"
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
 
               <div>
@@ -170,9 +204,10 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="mt-2"
+                  className={`mt-2 ${errors.subject ? 'border-red-500' : ''}`}
                   placeholder="Objet de votre message"
                 />
+                {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
               </div>
 
               <div>
@@ -183,9 +218,10 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="mt-2 min-h-[150px]"
+                  className={`mt-2 min-h-[150px] ${errors.message ? 'border-red-500' : ''}`}
                   placeholder="Décrivez votre projet..."
                 />
+                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
               </div>
 
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">

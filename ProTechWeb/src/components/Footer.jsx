@@ -8,10 +8,23 @@ import { useToast } from '@/components/ui/use-toast';
 const Footer = () => {
   const { toast } = useToast();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
-    
+
+    if (!validateEmail(email)) {
+      toast({
+        title: "Email invalide",
+        description: "Veuillez entrer une adresse email valide.",
+      });
+      return;
+    }
+
     const subscribers = JSON.parse(localStorage.getItem('newsletter') || '[]');
     subscribers.push({
       email,
@@ -23,7 +36,7 @@ const Footer = () => {
       title: "Inscription réussie ! 🎉",
       description: "Merci de vous être abonné à notre newsletter.",
     });
-    
+
     e.target.reset();
   };
 
