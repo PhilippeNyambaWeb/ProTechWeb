@@ -26,7 +26,7 @@ const Hero = () => {
                 className="absolute z-0 w-full h-full object-cover"
                 style={{ objectPosition: 'center 70%' }}
             >
-                <source src="/assets/banner.mp4" type="video/mp4" />
+                <source src="/assets/banner-video.mp4" type="video/mp4" />
                 Votre navigateur ne supporte pas la vidéo.
             </video>
             <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
