@@ -1,0 +1,49 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* #ffffff */
+    --foreground: 209 31% 25%; /* Slightly darker than primary for text */
+    --card: 0 0% 100%;
+    --card-foreground: 209 31% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 209 31% 25%;
+    --primary: 209 31% 35%; /* #3e5c76 */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 202 71% 76%; /* #a4d3ee */
+    --secondary-foreground: 209 31% 35%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 202 71% 76%; /* #a4d3ee */
+    --accent-foreground: 209 31% 35%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 202 71% 76%; /* #a4d3ee */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Adjust this value to match your header's height */
+}
+
+/* Ensure the hero section content is not overlapped by the header */
+#home {
+    padding-top: 120px;
+}
