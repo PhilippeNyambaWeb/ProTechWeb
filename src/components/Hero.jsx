@@ -16,19 +16,21 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" className="relative h-[670px] flex items-center justify-center text-center overflow-hidden pt-[120px]">
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                poster="/assets/banner-fallback.jpg"
-                className="absolute z-0 w-full h-full object-cover"
-                style={{ objectPosition: 'center 70%' }}
-            >
-                <source src="/assets/banner-video.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la vidéo.
-            </video>
+        <section id="home" className="relative h-[670px] flex items-center justify-center text-center overflow-hidden pt-[120px] bg-black">
+            <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="/assets/banner-fallback.jpg"
+                    className="h-full max-w-[1400px] object-cover"
+                    style={{ objectPosition: 'center 70%' }}
+                >
+                    <source src="/assets/banner-video.mp4" type="video/mp4" />
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
 
             <motion.div
