@@ -95,7 +95,6 @@ const Footer = () => {
             <span className="font-bold text-lg mb-4 block">Entreprise</span>
             <ul className="space-y-2 text-gray-400">
               <li><a href="#about" className="hover:text-primary transition-colors">À propos</a></li>
-              <li><a href="#testimonials" className="hover:text-primary transition-colors">Témoignages</a></li>
               <li><a href="#contact" className="hover:text-primary transition-colors">Contact</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Carrières</a></li>
             </ul>
