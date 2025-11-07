@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Code2, Smartphone, Palette, Database, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
+import ServiceDetails from '@/components/ServiceDetails';
 
 const Services = () => {
-    const { toast } = useToast();
+  const [selectedService, setSelectedService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleButtonClick = () => {
-        toast({
-            title: "Fonctionnalité à venir !",
-            description: "🚧 Cette fonctionnalité n'est pas encore implémentée—mais ne vous inquiétez pas ! Vous pouvez la demander dans votre prochain message ! 🚀",
-        });
-    };
+  const handleLearnMore = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedService(null), 300);
+  };
 
   const services = [
     {
@@ -95,7 +99,7 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-              <Button variant="outline" className="w-full group" onClick={handleButtonClick}>
+              <Button variant="outline" className="w-full group" onClick={() => handleLearnMore(service)}>
                 En savoir plus
                 <motion.span
                   className="ml-2"
@@ -109,6 +113,12 @@ const Services = () => {
           ))}
         </div>
       </div>
+
+      <ServiceDetails
+        service={selectedService}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </section>
   );
 };

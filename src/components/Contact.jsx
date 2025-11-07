@@ -23,7 +23,7 @@ const Contact = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -52,25 +52,44 @@ const Contact = () => {
     }
 
     setErrors({});
-    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    contacts.push({
-      ...formData,
-      date: new Date().toISOString()
-    });
-    localStorage.setItem('contacts', JSON.stringify(contacts));
 
-    toast({
-      title: "Message envoyé ! 🎉",
-      description: "Nous vous répondrons dans les plus brefs délais.",
-    });
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
 
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Message envoyé !",
+          description: data.message || "Nous vous répondrons dans les plus brefs délais.",
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error(data.error || 'Une erreur est survenue');
+      }
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue, merci de réessayer.",
+      });
+    }
   };
 
   const handleChange = (e) => {
