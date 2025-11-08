@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-card';
 import { useScroll } from '@/contexts/ScrollContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { activeSection, scrollToSection, setActiveSection } = useScroll();
+  const { language, toggleLanguage } = useLanguage();
+  const t = useTranslations(language);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,10 +49,10 @@ const Header = () => {
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { label: 'Accueil', id: 'home' },
-    { label: 'Services', id: 'services' },
-    { label: 'Tarifs', id: 'tarifs' },
-    { label: 'Contact', id: 'contact' },
+    { label: t.nav.home, id: 'home' },
+    { label: t.nav.services, id: 'services' },
+    { label: t.nav.pricing, id: 'tarifs' },
+    { label: t.nav.contact, id: 'contact' },
   ];
 
   const handleNavClick = (sectionId) => {
@@ -113,18 +117,36 @@ const Header = () => {
                   )}
                 </motion.button>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center space-x-1 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-medium"
+                aria-label="Toggle language"
+              >
+                <Globe size={16} />
+                <span>{language === 'fr' ? 'EN' : 'FR'}</span>
+              </button>
               <GlassButton variant="primary" onClick={handleDevisClick} className="px-6 py-2 text-sm">
-                Devis Gratuit
+                {language === 'fr' ? 'Devis Gratuit' : 'Free Quote'}
               </GlassButton>
             </div>
 
-            <button
-              className="md:hidden text-white z-50"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-            >
-              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+            <div className="md:hidden flex items-center space-x-3">
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center space-x-1 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-medium"
+                aria-label="Toggle language"
+              >
+                <Globe size={16} />
+                <span>{language === 'fr' ? 'EN' : 'FR'}</span>
+              </button>
+              <button
+                className="text-white z-50"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              >
+                {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              </button>
+            </div>
           </div>
         </nav>
       </motion.header>
@@ -157,7 +179,7 @@ const Header = () => {
                 onClick={handleDevisClick}
                 className="mt-8 text-xl px-12 py-4"
               >
-                Devis Gratuit
+                {language === 'fr' ? 'Devis Gratuit' : 'Free Quote'}
               </GlassButton>
             </div>
           </motion.div>
