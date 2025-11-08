@@ -204,7 +204,7 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
                   <div className="grid md:grid-cols-2 gap-8">
                     <section className="bg-gray-50 rounded-xl p-6">
                       <h3 className="text-xl font-bold text-gray-900 mb-2">Durée estimée</h3>
-                      <p className="text-2xl font-bold text-primary">{details.timeline}</p>
+                      <p className="text-2xl font-bold text-secondary">{details.timeline}</p>
                     </section>
 
                     <section className="bg-gray-50 rounded-xl p-6">

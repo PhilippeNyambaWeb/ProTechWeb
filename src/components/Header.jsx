@@ -77,8 +77,8 @@ const Header = () => {
             >
               <img src="/assets/Logo_ProtechWeb-No_Bgd.png" alt="ProTechWeb Logo" className="h-12 w-auto" />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold text-primary leading-tight">ProTechWeb</span>
-                <span className="text-xs text-gray-600 leading-tight hidden sm:block">
+                <span className="text-2xl font-bold text-secondary leading-tight">ProTechWeb</span>
+                <span className="text-xs text-gray-300 leading-tight hidden sm:block">
                   Professionnels des Technologies du Web
                 </span>
               </div>

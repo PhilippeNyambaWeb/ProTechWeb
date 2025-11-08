@@ -165,7 +165,7 @@ const Contact = () => {
             <div className="space-y-8">
               <div className="flex items-start space-x-4">
                 <div className="bg-primary/10 p-3 rounded-full">
-                  <Mail className="text-primary" size={24} />
+                  <Mail className="text-secondary" size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-white mb-1">Email</h3>
@@ -175,7 +175,7 @@ const Contact = () => {
 
               <div className="flex items-start space-x-4">
                 <div className="bg-primary/10 p-3 rounded-full">
-                  <Phone className="text-primary" size={24} />
+                  <Phone className="text-secondary" size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-white mb-1">Téléphone</h3>
@@ -185,7 +185,7 @@ const Contact = () => {
 
               <div className="flex items-start space-x-4">
                 <div className="bg-primary/10 p-3 rounded-full">
-                  <MapPin className="text-primary" size={24} />
+                  <MapPin className="text-secondary" size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-white mb-1">Adresse</h3>

@@ -45,7 +45,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <span className="text-2xl font-bold text-primary mb-4 block">ProTechWeb</span>
+            <span className="text-2xl font-bold text-secondary mb-4 block">ProTechWeb</span>
             <p className="text-gray-400 mb-4">
               Votre partenaire de confiance pour des solutions web professionnelles et innovantes.
             </p>
@@ -53,28 +53,28 @@ const Footer = () => {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 href="#"
-                className="bg-gray-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-gray-800 p-2 rounded-full hover:bg-secondary transition-colors"
               >
                 <Facebook size={20} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 href="#"
-                className="bg-gray-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-gray-800 p-2 rounded-full hover:bg-secondary transition-colors"
               >
                 <Twitter size={20} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 href="#"
-                className="bg-gray-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-gray-800 p-2 rounded-full hover:bg-secondary transition-colors"
               >
                 <Linkedin size={20} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 href="#"
-                className="bg-gray-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-gray-800 p-2 rounded-full hover:bg-secondary transition-colors"
               >
                 <Instagram size={20} />
               </motion.a>
@@ -84,19 +84,19 @@ const Footer = () => {
           <div>
             <span className="font-bold text-lg mb-4 block">Services</span>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#services" className="hover:text-primary transition-colors">Design Web</a></li>
-              <li><a href="#services" className="hover:text-primary transition-colors">Développement</a></li>
-              <li><a href="#services" className="hover:text-primary transition-colors">Applications</a></li>
-              <li><a href="#services" className="hover:text-primary transition-colors">SEO & Marketing</a></li>
+              <li><a href="#services" className="hover:text-secondary transition-colors">Design Web</a></li>
+              <li><a href="#services" className="hover:text-secondary transition-colors">Développement</a></li>
+              <li><a href="#services" className="hover:text-secondary transition-colors">Applications</a></li>
+              <li><a href="#services" className="hover:text-secondary transition-colors">SEO & Marketing</a></li>
             </ul>
           </div>
 
           <div>
             <span className="font-bold text-lg mb-4 block">Entreprise</span>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#about" className="hover:text-primary transition-colors">À propos</a></li>
-              <li><a href="#contact" className="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Carrières</a></li>
+              <li><a href="#about" className="hover:text-secondary transition-colors">À propos</a></li>
+              <li><a href="#contact" className="hover:text-secondary transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-secondary transition-colors">Carrières</a></li>
             </ul>
           </div>
 
@@ -105,15 +105,15 @@ const Footer = () => {
             <p className="text-gray-400 mb-4">
               Restez informé de nos dernières actualités et offres.
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="space-y-2">
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
               <Input
                 type="email"
                 name="email"
                 placeholder="Votre email"
                 required
-                className="bg-gray-800 border-gray-700 text-white"
+                className="bg-white/10 border-white/30 text-white placeholder:text-gray-400 focus:border-secondary focus:ring-secondary h-11 backdrop-blur-sm"
               />
-              <GlassButton variant="primary" type="submit" className="w-full">
+              <GlassButton variant="secondary" type="submit" className="w-full px-6 py-3">
                 <Mail className="mr-2 h-4 w-4" />
                 S'abonner
               </GlassButton>
@@ -125,9 +125,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
             <p>© 2025 ProTechWeb. Tous droits réservés.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-primary transition-colors">Politique de confidentialité</a>
-              <a href="#" className="hover:text-primary transition-colors">Conditions d'utilisation</a>
-              <a href="#" className="hover:text-primary transition-colors">Mentions légales</a>
+              <a href="#" className="hover:text-secondary transition-colors">Politique de confidentialité</a>
+              <a href="#" className="hover:text-secondary transition-colors">Conditions d'utilisation</a>
+              <a href="#" className="hover:text-secondary transition-colors">Mentions légales</a>
             </div>
           </div>
         </div>

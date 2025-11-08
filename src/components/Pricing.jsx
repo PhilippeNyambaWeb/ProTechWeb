@@ -125,7 +125,7 @@ const Pricing = () => {
               )}
 
               <div className="mb-6">
-                <h3 className={`text-2xl font-bold mb-2 ${tier.highlighted ? 'text-primary' : 'text-white'}`}>
+                <h3 className={`text-2xl font-bold mb-2 ${tier.highlighted ? 'text-secondary' : 'text-white'}`}>
                   {tier.name}
                 </h3>
                 <p className="text-sm text-gray-200">
@@ -135,7 +135,7 @@ const Pricing = () => {
 
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className={`text-5xl font-bold ${tier.highlighted ? 'text-primary' : 'text-white'}`}>
+                  <span className={`text-5xl font-bold ${tier.highlighted ? 'text-secondary' : 'text-white'}`}>
                     ${tier.price}
                   </span>
                   <span className="ml-2 text-gray-200">
@@ -149,7 +149,7 @@ const Pricing = () => {
                   <li key={idx} className="flex items-start">
                     <Check
                       className={`mr-3 flex-shrink-0 mt-0.5 ${
-                        tier.highlighted ? 'text-primary' : 'text-secondary'
+                        tier.highlighted ? 'text-secondary' : 'text-secondary'
                       }`}
                       size={20}
                     />

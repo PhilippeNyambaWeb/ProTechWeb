@@ -22,9 +22,9 @@ export const GlassCard = ({ children, className, hover = true, ...props }) => {
 
 export const GlassButton = ({ children, className, variant = 'primary', ...props }) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-primary/90 to-primary/80 hover:from-primary hover:to-primary text-white backdrop-blur-md border border-white/30',
-    secondary: 'bg-white/15 hover:bg-white/25 text-white backdrop-blur-md border border-white/40',
-    accent: 'bg-gradient-to-r from-primary via-secondary/80 to-secondary hover:from-primary/90 hover:via-secondary/90 hover:to-secondary/90 text-white backdrop-blur-md border border-white/30'
+    primary: 'bg-transparent hover:bg-white/10 text-white border-2 border-secondary hover:border-white',
+    secondary: 'bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white',
+    accent: 'bg-transparent hover:bg-secondary/20 text-white border-2 border-secondary hover:border-secondary'
   };
 
   return (
@@ -33,7 +33,7 @@ export const GlassButton = ({ children, className, variant = 'primary', ...props
       whileTap={{ scale: 0.95 }}
       className={cn(
         'px-6 py-3 rounded-full font-bold text-white',
-        'shadow-lg hover:shadow-xl transition-all duration-300',
+        'hover:shadow-lg transition-all duration-300',
         'relative overflow-hidden group',
         variants[variant],
         className
@@ -42,10 +42,8 @@ export const GlassButton = ({ children, className, variant = 'primary', ...props
     >
       <span className="relative z-10">{children}</span>
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
-        initial={{ x: '-100%' }}
-        whileHover={{ x: '100%' }}
-        transition={{ duration: 0.6 }}
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
+        transition={{ duration: 0.3 }}
       />
     </motion.button>
   );
