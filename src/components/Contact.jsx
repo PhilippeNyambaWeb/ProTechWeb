@@ -199,9 +199,9 @@ const Contact = () => {
               </div>
 
               <div className="backdrop-blur-sm bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8 border border-white/30">
-                <h3 className="font-bold text-white mb-3">Horaires d'ouverture</h3>
+                <h3 className="font-bold text-white mb-3">{t.contact.info.hours}</h3>
                 <div className="space-y-2 text-gray-200">
-                  <p>Lundi - Jeudi: 9h00 - 16h00</p>
+                  <p>{t.contact.info.hoursValue}</p>
                 </div>
               </div>
             </div>

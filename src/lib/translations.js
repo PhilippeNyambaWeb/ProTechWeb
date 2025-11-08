@@ -15,6 +15,8 @@ export const translations = {
       titleHighlight: 'solutions web innovantes',
       subtitle: 'Nous créons des sites web et applications modernes qui propulsent votre entreprise vers le succès numérique.',
       cta: 'Démarrer un projet',
+      aboutTitle: 'Qui Sommes-Nous ?',
+      aboutDesc: 'Une équipe passionnée de professionnels du web dédiée à transformer vos ambitions digitales en réalité concrète.',
       mission: 'Notre Mission',
       missionDesc: 'Solutions web innovantes',
       vision: 'Notre Vision',
@@ -206,51 +208,68 @@ export const translations = {
     // Pricing
     pricing: {
       title: 'Nos Tarifs',
-      subtitle: 'Des forfaits adaptés à chaque besoin',
+      subtitle: 'Des forfaits transparents adaptés à vos besoins et votre budget. Tous nos projets incluent un suivi personnalisé.',
       starter: {
-        title: 'Démarrage',
-        description: 'Parfait pour démarrer votre présence en ligne',
+        title: 'Essentiel',
+        price: '$499',
+        priceNote: '/projet',
+        description: 'Parfait pour les petites entreprises et les startups qui débutent en ligne.',
         features: [
-          'Site vitrine jusqu\'à 5 pages',
-          'Design responsive',
+          'Site web responsive (jusqu\'à 5 pages)',
+          'Design moderne et professionnel',
+          'Optimisation mobile',
           'Formulaire de contact',
           'SEO de base',
           'Hébergement 1 an inclus',
-          'Support 30 jours'
+          'Support par email'
         ]
       },
       professional: {
-        title: 'Professionnel',
-        description: 'Pour les entreprises en croissance',
-        popular: 'Populaire',
+        title: 'Pro',
+        price: '$1299',
+        priceNote: '/projet',
+        description: 'La solution complète pour les entreprises en croissance qui veulent se démarquer.',
+        popular: 'Le plus populaire',
         features: [
-          'Site jusqu\'à 10 pages',
-          'Design personnalisé',
-          'Blog intégré',
+          'Site web responsive (jusqu\'à 10 pages)',
+          'Design sur mesure premium',
+          'Animation et micro-interactions',
+          'Système de gestion de contenu (CMS)',
+          'Intégration analytics avancée',
           'SEO avancé',
+          'Formulaires personnalisés',
           'Hébergement 1 an inclus',
-          'Support 90 jours',
-          'Intégrations tierces',
-          'Analytics avancés'
+          'Support prioritaire (email & téléphone)',
+          'Maintenance 3 mois offerte'
         ]
       },
       enterprise: {
-        title: 'Entreprise',
-        description: 'Solutions sur mesure pour grandes entreprises',
+        title: 'Premium',
+        price: '$2499',
+        priceNote: '/projet',
+        description: 'Solution entreprise avec fonctionnalités avancées et accompagnement personnalisé.',
         features: [
+          'Site web ou application web complète',
           'Pages illimitées',
-          'Application web complexe',
-          'Architecture personnalisée',
-          'API et intégrations',
-          'Support prioritaire',
-          'Formation équipe',
-          'Maintenance continue',
-          'Sécurité renforcée'
+          'Design et branding complet',
+          'Développement sur mesure',
+          'Base de données et backend',
+          'Espace membre / authentification',
+          'API et intégrations tierces',
+          'E-commerce (si applicable)',
+          'SEO premium & stratégie de contenu',
+          'Formation complète',
+          'Hébergement 1 an inclus',
+          'Support dédié 24/7',
+          'Maintenance 6 mois offerte'
         ]
       },
       custom: 'Nous contacter',
-      cta: 'Choisir ce forfait',
-      perMonth: '/mois'
+      cta: 'Démarrer',
+      ctaAlt: 'Demander un devis gratuit',
+      perMonth: '/mois',
+      perProject: '/projet',
+      customQuestion: 'Besoin d\'un forfait personnalisé ou d\'un devis détaillé ?'
     },
     // Contact
     contact: {
@@ -290,19 +309,34 @@ export const translations = {
       info: {
         email: 'Email',
         phone: 'Téléphone',
-        location: 'Localisation'
+        location: 'Localisation',
+        hours: 'Horaires d\'ouverture',
+        hoursValue: 'Lundi - Jeudi: 9h00 - 16h00'
       }
     },
     // Footer
     footer: {
-      tagline: 'Votre partenaire de confiance pour l\'excellence digitale',
+      tagline: 'Votre partenaire de confiance pour des solutions web professionnelles et innovantes.',
       quickLinks: 'Liens rapides',
       services: 'Services',
+      servicesLinks: {
+        webDesign: 'Design Web',
+        development: 'Développement',
+        applications: 'Applications',
+        seoMarketing: 'SEO & Marketing'
+      },
+      company: 'Entreprise',
+      companyLinks: {
+        about: 'À propos',
+        contact: 'Contact',
+        careers: 'Carrières'
+      },
       legal: 'Légal',
-      privacy: 'Confidentialité',
-      terms: 'Conditions',
+      privacy: 'Politique de confidentialité',
+      terms: 'Conditions d\'utilisation',
+      legalNotice: 'Mentions légales',
       newsletter: 'Newsletter',
-      newsletterDesc: 'Restez informé de nos dernières actualités',
+      newsletterDesc: 'Restez informé de nos dernières actualités et offres.',
       newsletterPlaceholder: 'Votre email',
       subscribe: 'S\'abonner',
       rights: 'Tous droits réservés.',
@@ -332,6 +366,8 @@ export const translations = {
       titleHighlight: 'innovative web solutions',
       subtitle: 'We create modern websites and applications that drive your business to digital success.',
       cta: 'Start a Project',
+      aboutTitle: 'Who Are We?',
+      aboutDesc: 'A passionate team of web professionals dedicated to transforming your digital ambitions into concrete reality.',
       mission: 'Our Mission',
       missionDesc: 'Innovative web solutions',
       vision: 'Our Vision',
@@ -523,9 +559,11 @@ export const translations = {
     // Pricing
     pricing: {
       title: 'Our Pricing',
-      subtitle: 'Packages tailored to every need',
+      subtitle: 'Transparent packages tailored to your needs and budget. All our projects include personalized follow-up.',
       starter: {
-        title: 'Starter',
+        title: 'Essential',
+        price: '$499',
+        priceNote: '/project',
         description: 'Perfect to start your online presence',
         features: [
           'Showcase site up to 5 pages',
@@ -607,19 +645,34 @@ export const translations = {
       info: {
         email: 'Email',
         phone: 'Phone',
-        location: 'Location'
+        location: 'Location',
+        hours: 'Business Hours',
+        hoursValue: 'Monday - Thursday: 9:00 AM - 4:00 PM'
       }
     },
     // Footer
     footer: {
-      tagline: 'Your trusted partner for digital excellence',
+      tagline: 'Your trusted partner for professional and innovative web solutions.',
       quickLinks: 'Quick Links',
       services: 'Services',
+      servicesLinks: {
+        webDesign: 'Web Design',
+        development: 'Development',
+        applications: 'Applications',
+        seoMarketing: 'SEO & Marketing'
+      },
+      company: 'Company',
+      companyLinks: {
+        about: 'About',
+        contact: 'Contact',
+        careers: 'Careers'
+      },
       legal: 'Legal',
-      privacy: 'Privacy',
-      terms: 'Terms',
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service',
+      legalNotice: 'Legal Notice',
       newsletter: 'Newsletter',
-      newsletterDesc: 'Stay informed about our latest news',
+      newsletterDesc: 'Stay informed about our latest news and offers.',
       newsletterPlaceholder: 'Your email',
       subscribe: 'Subscribe',
       rights: 'All rights reserved.',

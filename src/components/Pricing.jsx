@@ -1,88 +1,47 @@
 import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useTranslations } from '@/lib/translations';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { GlassCard, GlassButton } from '@/components/ui/glass-card';
 import { useScroll } from '@/contexts/ScrollContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 
 const Pricing = () => {
+  const { prefillContactForm } = useScroll();
   const { language } = useLanguage();
   const t = useTranslations(language);
-  const { prefillContactForm } = useScroll();
 
-  const handlePlanSelect = (plan) => {
+  const handlePlanSelect = (planName, price) => {
     prefillContactForm({
-      inquiryType: 'Devis',
-      subject: `Forfait ${plan.name} - $${plan.price}/${plan.period}`,
-      message: `Je suis intéressé par le forfait ${plan.name} à $${plan.price}. Voici les détails de mon projet:\n\n`
+      inquiryType: language === 'fr' ? 'Devis' : 'Quote',
+      subject: `${language === 'fr' ? 'Forfait' : 'Plan'} ${planName} - ${price}${t.pricing.perProject}`,
+      message: language === 'fr'
+        ? `Je suis intéressé par le forfait ${planName} à ${price}. Voici les détails de mon projet:\n\n`
+        : `I am interested in the ${planName} plan at ${price}. Here are my project details:\n\n`
     });
   };
 
   const handleCustomQuote = () => {
     prefillContactForm({
-      inquiryType: 'Devis',
-      subject: 'Demande de forfait personnalisé',
-      message: 'Je souhaite obtenir un devis personnalisé pour mon projet. Voici mes besoins spécifiques:\n\n'
+      inquiryType: language === 'fr' ? 'Devis' : 'Quote',
+      subject: language === 'fr' ? 'Demande de forfait personnalisé' : 'Custom plan request',
+      message: language === 'fr'
+        ? 'Je souhaite obtenir un devis personnalisé pour mon projet. Voici mes besoins spécifiques:\n\n'
+        : 'I would like to get a custom quote for my project. Here are my specific needs:\n\n'
     });
   };
 
   const pricingTiers = [
     {
-      name: 'Essentiel',
-      price: '499',
-      period: 'projet',
-      description: 'Parfait pour les petites entreprises et les startups qui débutent en ligne.',
-      features: [
-        'Site web responsive (jusqu\'à 5 pages)',
-        'Design moderne et professionnel',
-        'Optimisation mobile',
-        'Formulaire de contact',
-        'SEO de base',
-        'Hébergement 1 an inclus',
-        'Support par email'
-      ],
+      ...t.pricing.starter,
       highlighted: false
     },
     {
-      name: 'Pro',
-      price: '1299',
-      period: 'projet',
-      description: 'La solution complète pour les entreprises en croissance qui veulent se démarquer.',
-      features: [
-        'Site web responsive (jusqu\'à 10 pages)',
-        'Design sur mesure premium',
-        'Animation et micro-interactions',
-        'Système de gestion de contenu (CMS)',
-        'Intégration analytics avancée',
-        'SEO avancé',
-        'Formulaires personnalisés',
-        'Hébergement 1 an inclus',
-        'Support prioritaire (email & téléphone)',
-        'Maintenance 3 mois offerte'
-      ],
+      ...t.pricing.professional,
       highlighted: true
     },
     {
-      name: 'Premium',
-      price: '2499',
-      period: 'projet',
-      description: 'Solution entreprise avec fonctionnalités avancées et accompagnement personnalisé.',
-      features: [
-        'Site web ou application web complète',
-        'Pages illimitées',
-        'Design et branding complet',
-        'Développement sur mesure',
-        'Base de données et backend',
-        'Espace membre / authentification',
-        'API et intégrations tierces',
-        'E-commerce (si applicable)',
-        'SEO premium & stratégie de contenu',
-        'Formation complète',
-        'Hébergement 1 an inclus',
-        'Support dédié 24/7',
-        'Maintenance 6 mois offerte'
-      ],
+      ...t.pricing.enterprise,
       highlighted: false
     }
   ];
@@ -97,81 +56,62 @@ const Pricing = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Nos Tarifs
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            {t.pricing.title}
           </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            Des forfaits transparents adaptés à vos besoins et votre budget. Tous nos projets incluent un suivi personnalisé.
+          <p className="text-xl text-white/80 max-w-3xl mx-auto">
+            {t.pricing.subtitle}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {pricingTiers.map((tier, index) => (
-            <GlassCard
-              key={tier.name}
-              as={motion.div}
+            <motion.div
+              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`relative p-8 ${
-                tier.highlighted
-                  ? 'bg-gradient-to-br from-primary/20 to-secondary/20 border-primary/40 shadow-2xl scale-105'
-                  : ''
-              }`}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              className="h-full"
             >
-              {tier.highlighted && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="backdrop-blur-md bg-gradient-to-r from-secondary to-primary text-white px-4 py-1 rounded-full text-sm font-bold border border-white/30">
-                    Le plus populaire
-                  </span>
-                </div>
-              )}
-
-              <div className="mb-6">
-                <h3 className={`text-2xl font-bold mb-2 ${tier.highlighted ? 'text-secondary' : 'text-white'}`}>
-                  {tier.name}
-                </h3>
-                <p className="text-sm text-gray-200">
-                  {tier.description}
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <div className="flex items-baseline">
-                  <span className={`text-5xl font-bold ${tier.highlighted ? 'text-secondary' : 'text-white'}`}>
-                    ${tier.price}
-                  </span>
-                  <span className="ml-2 text-gray-200">
-                    /{tier.period}
-                  </span>
-                </div>
-              </div>
-
-              <ul className="space-y-4 mb-8">
-                {tier.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <Check
-                      className={`mr-3 flex-shrink-0 mt-0.5 ${
-                        tier.highlighted ? 'text-secondary' : 'text-secondary'
-                      }`}
-                      size={20}
-                    />
-                    <span className="text-sm text-gray-200">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <GlassButton
-                variant={tier.highlighted ? 'accent' : 'primary'}
-                onClick={() => handlePlanSelect(tier)}
-                className="w-full"
+              <GlassCard
+                className={`h-full flex flex-col p-8 relative ${
+                  tier.highlighted ? 'ring-2 ring-secondary' : ''
+                }`}
               >
-                Démarrer
-              </GlassButton>
-            </GlassCard>
+                {tier.highlighted && tier.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-bold">
+                    {tier.popular}
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">{tier.title}</h3>
+                  <div className="flex items-baseline mb-4">
+                    <span className="text-4xl font-bold text-secondary">{tier.price}</span>
+                    <span className="text-white/60 ml-2">{tier.priceNote}</span>
+                  </div>
+                  <p className="text-white/70">{tier.description}</p>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {tier.features.map((feature, i) => (
+                    <li key={i} className="flex items-start text-white/80">
+                      <Check className="w-5 h-5 text-secondary mr-3 flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <GlassButton
+                  variant={tier.highlighted ? 'accent' : 'secondary'}
+                  onClick={() => handlePlanSelect(tier.title, tier.price)}
+                  className="w-full py-3"
+                >
+                  {t.pricing.cta}
+                </GlassButton>
+              </GlassCard>
+            </motion.div>
           ))}
         </div>
 
@@ -179,18 +119,18 @@ const Pricing = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-center mt-16"
         >
-          <p className="text-gray-200 mb-4">
-            Besoin d'un forfait personnalisé ou d'un devis détaillé ?
+          <p className="text-xl text-white/90 mb-6">
+            {t.pricing.customQuestion}
           </p>
           <GlassButton
-            variant="secondary"
+            variant="primary"
             onClick={handleCustomQuote}
             className="px-8 py-3"
           >
-            Demander un devis gratuit
+            {t.pricing.ctaAlt}
           </GlassButton>
         </motion.div>
       </div>
