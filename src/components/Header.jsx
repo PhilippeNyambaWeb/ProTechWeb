@@ -13,7 +13,7 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'about', 'services', 'tarifs', 'contact'];
+      const sections = ['home', 'services', 'tarifs', 'contact'];
       let currentSection = 'home';
 
       for (const sectionId of sections) {
@@ -44,7 +44,6 @@ const Header = () => {
 
   const navItems = [
     { label: 'Accueil', id: 'home' },
-    { label: 'À propos', id: 'about' },
     { label: 'Services', id: 'services' },
     { label: 'Tarifs', id: 'tarifs' },
     { label: 'Contact', id: 'contact' },

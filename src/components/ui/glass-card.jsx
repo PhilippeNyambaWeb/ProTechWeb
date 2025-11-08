@@ -35,12 +35,13 @@ export const GlassButton = ({ children, className, variant = 'primary', ...props
         'px-6 py-3 rounded-full font-bold text-white',
         'hover:shadow-lg transition-all duration-300',
         'relative overflow-hidden group',
+        'inline-flex items-center justify-center',
         variants[variant],
         className
       )}
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 inline-flex items-center">{children}</span>
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
         transition={{ duration: 0.3 }}

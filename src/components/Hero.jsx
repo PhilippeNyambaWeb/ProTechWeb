@@ -46,7 +46,7 @@ const Hero = () => {
         className="relative z-20 container mx-auto px-4 text-white flex-1 flex flex-col items-center justify-center"
       >
         <motion.div
-          className="backdrop-blur-md bg-black/40 rounded-3xl p-8 md:p-12 border border-white/30 max-w-5xl mx-auto"
+          className="backdrop-blur-md bg-white/20 rounded-3xl p-8 md:p-12 border border-white/40 max-w-6xl mx-auto"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -55,18 +55,67 @@ const Hero = () => {
             Transformez Votre Vision en{' '}
             <span className="text-secondary">Réalité Digitale</span>
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-gray-100 drop-shadow-lg">
+          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-white drop-shadow-lg">
             Solutions web professionnelles sur mesure. Design moderne, développement robuste et
             applications innovantes pour propulser votre entreprise.
           </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mb-8"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Qui Sommes-Nous ?
+            </h2>
+            <p className="text-base md:text-lg text-white/90 mb-8 max-w-3xl mx-auto">
+              Une équipe passionnée de professionnels du web dédiée à transformer vos ambitions digitales en réalité concrète.
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-white mb-2">Notre Mission</h3>
+                <p className="text-xs md:text-sm text-white/80">Solutions web innovantes</p>
+              </div>
+
+              <div className="text-center">
+                <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">👁️</span>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-white mb-2">Notre Vision</h3>
+                <p className="text-xs md:text-sm text-white/80">Partenaire de confiance</p>
+              </div>
+
+              <div className="text-center">
+                <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">🏆</span>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-white mb-2">Excellence</h3>
+                <p className="text-xs md:text-sm text-white/80">Qualité irréprochable</p>
+              </div>
+
+              <div className="text-center">
+                <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">👥</span>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-white mb-2">Collaboration</h3>
+                <p className="text-xs md:text-sm text-white/80">Résultats exceptionnels</p>
+              </div>
+            </div>
+          </motion.div>
+
           <div className="flex flex-wrap justify-center gap-4">
             <GlassButton
               variant="accent"
               onClick={handleStartProject}
-              className="px-8 py-4 text-lg"
+              className="px-8 py-4 text-lg inline-flex items-center"
             >
-              Démarrer un Projet
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <span>Démarrer un Projet</span>
+              <ArrowRight className="ml-2 h-5 w-5 inline-block" />
             </GlassButton>
           </div>
         </motion.div>

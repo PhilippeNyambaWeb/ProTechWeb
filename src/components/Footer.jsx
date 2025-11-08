@@ -111,11 +111,11 @@ const Footer = () => {
                 name="email"
                 placeholder="Votre email"
                 required
-                className="bg-white/10 border-white/30 text-white placeholder:text-gray-400 focus:border-secondary focus:ring-secondary h-11 backdrop-blur-sm"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-secondary focus:ring-secondary h-11"
               />
               <GlassButton variant="secondary" type="submit" className="w-full px-6 py-3">
                 <Mail className="mr-2 h-4 w-4" />
-                S'abonner
+                <span>S'abonner</span>
               </GlassButton>
             </form>
           </div>
