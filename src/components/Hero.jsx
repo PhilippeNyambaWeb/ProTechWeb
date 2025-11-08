@@ -24,7 +24,7 @@ const Hero = () => {
                     muted
                     playsInline
                     poster="/assets/banner-fallback.jpg"
-                    className="w-full h-full max-w-[1400px] object-cover"
+                    className="w-full h-full object-cover"
                     style={{ objectPosition: 'center 70%' }}
                 >
                     <source src="https://videos.pexels.com/video-files/3254066/3254066-uhd_2560_1440_25fps.mp4" type="video/mp4" />
