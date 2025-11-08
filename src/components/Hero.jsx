@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Target, Eye, Award, Users } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-card';
 import { useScroll } from '@/contexts/ScrollContext';
 
@@ -76,7 +76,7 @@ const Hero = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
               <div className="text-center">
                 <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🎯</span>
+                  <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <h3 className="text-sm md:text-base font-bold text-white mb-2">Notre Mission</h3>
                 <p className="text-xs md:text-sm text-white/80">Solutions web innovantes</p>
@@ -84,7 +84,7 @@ const Hero = () => {
 
               <div className="text-center">
                 <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">👁️</span>
+                  <Eye className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <h3 className="text-sm md:text-base font-bold text-white mb-2">Notre Vision</h3>
                 <p className="text-xs md:text-sm text-white/80">Partenaire de confiance</p>
@@ -92,7 +92,7 @@ const Hero = () => {
 
               <div className="text-center">
                 <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🏆</span>
+                  <Award className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <h3 className="text-sm md:text-base font-bold text-white mb-2">Excellence</h3>
                 <p className="text-xs md:text-sm text-white/80">Qualité irréprochable</p>
@@ -100,7 +100,7 @@ const Hero = () => {
 
               <div className="text-center">
                 <div className="bg-white/20 backdrop-blur-sm w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">👥</span>
+                  <Users className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <h3 className="text-sm md:text-base font-bold text-white mb-2">Collaboration</h3>
                 <p className="text-xs md:text-sm text-white/80">Résultats exceptionnels</p>

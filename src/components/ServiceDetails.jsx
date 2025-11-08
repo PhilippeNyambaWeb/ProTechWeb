@@ -143,10 +143,10 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="fixed inset-4 md:inset-8 lg:inset-16 backdrop-blur-xl bg-white/90 rounded-3xl shadow-2xl z-50 overflow-hidden border border-white/30"
+            className="fixed inset-4 md:inset-8 lg:inset-16 backdrop-blur-2xl bg-black/30 rounded-3xl shadow-2xl z-50 overflow-hidden border border-white/20"
           >
             <div className="h-full flex flex-col">
-              <div className="backdrop-blur-md bg-gradient-to-r from-primary/80 to-secondary/70 text-white p-6 md:p-8 border-b border-white/20">
+              <div className="backdrop-blur-md bg-white/10 text-white p-6 md:p-8 border-b border-white/20">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="bg-white/20 p-3 rounded-full">
@@ -168,33 +168,33 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
 
               <div className="flex-1 overflow-y-auto p-6 md:p-8">
                 <div className="max-w-4xl mx-auto space-y-8">
-                  <section>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">Aperçu</h3>
-                    <p className="text-gray-800 leading-relaxed">{details.overview}</p>
+                  <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
+                    <h3 className="text-2xl font-bold text-white mb-3">Aperçu</h3>
+                    <p className="text-white/90 leading-relaxed">{details.overview}</p>
                   </section>
 
                   <div className="grid md:grid-cols-2 gap-8">
-                    <section>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Notre Processus</h3>
+                    <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
+                      <h3 className="text-xl font-bold text-white mb-4">Notre Processus</h3>
                       <ol className="space-y-3">
                         {details.process?.map((step, index) => (
                           <li key={index} className="flex items-start">
-                            <span className="bg-primary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">
+                            <span className="bg-secondary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">
                               {index + 1}
                             </span>
-                            <span className="text-gray-800 pt-1">{step}</span>
+                            <span className="text-white/90 pt-1">{step}</span>
                           </li>
                         ))}
                       </ol>
                     </section>
 
-                    <section>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Livrables</h3>
+                    <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
+                      <h3 className="text-xl font-bold text-white mb-4">Livrables</h3>
                       <ul className="space-y-3">
                         {details.deliverables?.map((item, index) => (
                           <li key={index} className="flex items-start">
-                            <div className="bg-primary/10 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0" />
-                            <span className="text-gray-800">{item}</span>
+                            <div className="bg-secondary rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0" />
+                            <span className="text-white/90">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -202,23 +202,23 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-8">
-                    <section className="bg-white/40 backdrop-blur-sm border border-white/30 rounded-xl p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Durée estimée</h3>
+                    <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
+                      <h3 className="text-xl font-bold text-white mb-2">Durée estimée</h3>
                       <p className="text-2xl font-bold text-secondary">{details.timeline}</p>
                     </section>
 
-                    <section className="bg-white/40 backdrop-blur-sm border border-white/30 rounded-xl p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Idéal pour</h3>
-                      <p className="text-gray-800">{details.idealFor}</p>
+                    <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
+                      <h3 className="text-xl font-bold text-white mb-2">Idéal pour</h3>
+                      <p className="text-white/90">{details.idealFor}</p>
                     </section>
                   </div>
 
-                  <section className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 md:p-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">Caractéristiques incluses</h3>
+                  <section className="backdrop-blur-sm bg-white/10 p-6 md:p-8 rounded-2xl border border-white/20">
+                    <h3 className="text-2xl font-bold text-white mb-3">Caractéristiques incluses</h3>
                     <ul className="grid md:grid-cols-2 gap-3">
                       {service.features?.map((feature, index) => (
-                        <li key={index} className="flex items-center text-gray-800">
-                          <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <li key={index} className="flex items-center text-white/90">
+                          <div className="w-2 h-2 bg-secondary rounded-full mr-3" />
                           {feature}
                         </li>
                       ))}
@@ -227,13 +227,13 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 p-6 md:p-8 glass-effect">
+              <div className="border-t border-white/20 p-6 md:p-8 backdrop-blur-md bg-white/10">
                 <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
-                  <p className="text-gray-800 text-center sm:text-left">
+                  <p className="text-white text-center sm:text-left">
                     Intéressé par ce service ? Discutons de votre projet.
                   </p>
                   <GlassButton
-                    variant="primary"
+                    variant="accent"
                     onClick={handleSelectService}
                     className="px-8 py-3 w-full sm:w-auto"
                   >
