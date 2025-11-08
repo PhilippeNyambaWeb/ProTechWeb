@@ -1,10 +1,14 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { GlassCard, GlassButton } from '@/components/ui/glass-card';
 import { useScroll } from '@/contexts/ScrollContext';
 
 const Pricing = () => {
+  const { language } = useLanguage();
+  const t = useTranslations(language);
   const { prefillContactForm } = useScroll();
 
   const handlePlanSelect = (plan) => {

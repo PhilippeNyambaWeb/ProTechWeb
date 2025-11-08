@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Code2, Smartphone, Palette, Database, Zap } from 'lucide-react';
+import { Globe, Code2, Smartphone, Palette, ShoppingCart, Database } from 'lucide-react';
 import { GlassCard, GlassButton } from '@/components/ui/glass-card';
 import { useScroll } from '@/contexts/ScrollContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 import ServiceDetails from '@/components/ServiceDetails';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { prefillContactForm } = useScroll();
+  const { language } = useLanguage();
+  const t = useTranslations(language);
 
   const handleLearnMore = (service) => {
     setSelectedService(service);
@@ -22,9 +26,11 @@ const Services = () => {
 
   const handleServiceSelect = (serviceTitle) => {
     prefillContactForm({
-      inquiryType: 'Devis',
-      subject: `Service: ${serviceTitle}`,
-      message: `Je suis intéressé par vos services de ${serviceTitle}. Voici plus de détails sur mes besoins:\n\n`
+      inquiryType: language === 'fr' ? 'Devis' : 'Quote',
+      subject: `${language === 'fr' ? 'Service' : 'Service'}: ${serviceTitle}`,
+      message: language === 'fr'
+        ? `Je suis intéressé par vos services de ${serviceTitle}. Voici plus de détails sur mes besoins:\n\n`
+        : `I am interested in your ${serviceTitle} services. Here are more details about my needs:\n\n`
     });
     closeModal();
   };
@@ -32,39 +38,45 @@ const Services = () => {
   const services = [
     {
       icon: Globe,
-      title: 'Design de Sites Web',
-      description: 'Création de sites web modernes, responsive et optimisés pour convertir vos visiteurs en clients.',
-      features: ['Design sur mesure', 'UX/UI optimisé', 'Responsive design', 'SEO intégré']
+      title: t.services.webDesign.title,
+      description: t.services.webDesign.description,
+      features: t.services.webDesign.features,
+      serviceKey: 'webDesign'
     },
     {
       icon: Code2,
-      title: 'Développement Web',
-      description: 'Développement de sites et applications web performants avec les technologies les plus récentes.',
-      features: ['Code propre', 'Performance optimale', 'Sécurité renforcée', 'Maintenance incluse']
+      title: t.services.webDev.title,
+      description: t.services.webDev.description,
+      features: t.services.webDev.features,
+      serviceKey: 'webDev'
     },
     {
       icon: Smartphone,
-      title: 'Applications Web',
-      description: 'Applications web progressives (PWA) offrant une expérience utilisateur exceptionnelle.',
-      features: ['Multi-plateforme', 'Hors ligne', 'Notifications push', 'Installation facile']
+      title: t.services.webApps.title,
+      description: t.services.webApps.description,
+      features: t.services.webApps.features,
+      serviceKey: 'webApps'
     },
     {
       icon: Palette,
-      title: 'Identité Visuelle',
-      description: 'Création d\'une identité de marque forte et cohérente pour vous démarquer.',
-      features: ['Logo professionnel', 'Charte graphique', 'Brand guidelines', 'Assets digitaux']
+      title: t.services.branding.title,
+      description: t.services.branding.description,
+      features: t.services.branding.features,
+      serviceKey: 'branding'
+    },
+    {
+      icon: ShoppingCart,
+      title: t.services.ecommerce.title,
+      description: t.services.ecommerce.description,
+      features: t.services.ecommerce.features,
+      serviceKey: 'ecommerce'
     },
     {
       icon: Database,
-      title: 'Solutions Backend',
-      description: 'Architecture backend robuste et scalable pour vos applications complexes.',
-      features: ['API REST/GraphQL', 'Base de données', 'Cloud hosting', 'Sécurité avancée']
-    },
-    {
-      icon: Zap,
-      title: 'Optimisation & SEO',
-      description: 'Amélioration des performances et du référencement pour maximiser votre visibilité.',
-      features: ['Audit SEO', 'Optimisation vitesse', 'Analytics', 'Stratégie contenu']
+      title: t.services.backend.title,
+      description: t.services.backend.description,
+      features: t.services.backend.features,
+      serviceKey: 'backend'
     }
   ];
 
@@ -78,65 +90,56 @@ const Services = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Nos Services
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            {t.services.title}
           </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            Des solutions complètes pour tous vos besoins digitaux, de la conception à la mise en ligne.
+          <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            {t.services.subtitle}
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <GlassCard
-              key={service.title}
-              className="p-8"
-              as={motion.div}
+            <motion.div
+              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
             >
-              <div className="bg-gradient-to-br from-primary/30 to-secondary/30 w-16 h-16 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
-                <service.icon className="text-white" size={32} />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
-              <p className="text-gray-200 mb-6">{service.description}</p>
-              <ul className="space-y-2 mb-6">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-sm text-gray-200">
-                    <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <GlassButton
-                variant="secondary"
-                onClick={() => handleLearnMore(service)}
-                className="w-full"
-              >
-                <span className="flex items-center justify-center">
-                  En savoir plus
-                  <motion.span
-                    className="ml-2"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    →
-                  </motion.span>
-                </span>
-              </GlassButton>
-            </GlassCard>
+              <GlassCard className="h-full p-8 hover:scale-105 transition-transform duration-300">
+                <service.icon className="w-12 h-12 text-secondary mb-6" />
+                <h3 className="text-2xl font-bold mb-4 text-white">{service.title}</h3>
+                <p className="text-white/80 mb-6">{service.description}</p>
+                <ul className="space-y-2 mb-8">
+                  {service.features.map((feature, i) => (
+                    <li key={i} className="flex items-center text-white/70">
+                      <div className="w-2 h-2 bg-secondary rounded-full mr-3" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <GlassButton
+                  variant="secondary"
+                  onClick={() => handleLearnMore(service)}
+                  className="w-full"
+                >
+                  {t.services.learnMore}
+                </GlassButton>
+              </GlassCard>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      <ServiceDetails
-        service={selectedService}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onSelect={handleServiceSelect}
-      />
+      {selectedService && (
+        <ServiceDetails
+          service={selectedService}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSelectService={handleServiceSelect}
+        />
+      )}
     </section>
   );
 };
