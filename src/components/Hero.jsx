@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 const Hero = () => {
     const { toast } = useToast();
-
+    const showButton = false;
     const handleButtonClick = (buttonName) => {
         toast({
             title: `Fonctionnalité '${buttonName}' à venir !`,
@@ -51,9 +51,11 @@ const Hero = () => {
                         Démarrer un Projet
                         <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
+                  {showButton && (
                     <Button onClick={() => handleButtonClick('Nos Réalisations')} size="lg" variant="outline" className="bg-transparent text-white border-secondary hover:bg-secondary hover:text-primary">
-                        Nos Réalisations
+                      Nos Réalisations
                     </Button>
+                  )}
                 </div>
             </motion.div>
         </section>
