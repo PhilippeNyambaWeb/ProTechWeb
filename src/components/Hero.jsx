@@ -27,7 +27,7 @@ const Hero = () => {
                     className="w-full h-full object-cover"
                     style={{ objectPosition: 'center 70%' }}
                 >
-                    <source src="https://videos.pexels.com/video-files/3254066/3254066-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                    <source src="https://videos.pexels.com/video-files/3191752/3191752-sd_640_360_25fps.mp4" type="video/mp4" />
                     Votre navigateur ne supporte pas la vidéo.
                 </video>
             </div>
