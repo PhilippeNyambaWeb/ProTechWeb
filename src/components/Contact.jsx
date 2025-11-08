@@ -7,9 +7,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { useScroll } from '@/contexts/ScrollContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 
 const Contact = () => {
   const { toast } = useToast();
+  const { language } = useLanguage();
+  const t = useTranslations(language);
   const { formPrefill, clearFormPrefill } = useScroll();
   const [formData, setFormData] = useState({
     name: '',
@@ -51,18 +55,18 @@ const Contact = () => {
     }
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Le nom est requis';
+      newErrors.name = t.contact.form.required;
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'L\'email est requis';
+      newErrors.email = t.contact.form.required;
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Email invalide';
+      newErrors.email = t.contact.form.emailInvalid;
     }
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Le sujet est requis';
+      newErrors.subject = t.contact.form.required;
     }
     if (!formData.message.trim()) {
-      newErrors.message = 'Le message est requis';
+      newErrors.message = t.contact.form.required;
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -146,10 +150,10 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Contactez-Nous
+            {t.contact.title}
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            Prêt à démarrer votre projet ? Parlons-en ensemble et créons quelque chose d'extraordinaire.
+            {t.contact.subtitle}
           </p>
         </motion.div>
 
@@ -168,7 +172,7 @@ const Contact = () => {
                   <Mail className="text-secondary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-1">Email</h3>
+                  <h3 className="font-bold text-white mb-1">{t.contact.info.email}</h3>
                   <p className="text-gray-200">contact@protechweb.ca</p>
                 </div>
               </div>
@@ -178,7 +182,7 @@ const Contact = () => {
                   <Phone className="text-secondary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-1">Téléphone</h3>
+                  <h3 className="font-bold text-white mb-1">{t.contact.info.phone}</h3>
                   <p className="text-gray-200">+1 (514) 994-4689</p>
                 </div>
               </div>
@@ -225,7 +229,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <Label htmlFor="name">Nom complet *</Label>
+                <Label htmlFor="name">{t.contact.form.name} *</Label>
                 <Input
                   id="name"
                   name="name"
@@ -234,13 +238,13 @@ const Contact = () => {
                   required
                   disabled={isSubmitting}
                   className={`mt-2 ${errors.name ? 'border-red-500' : ''}`}
-                  placeholder="Votre nom"
+                  placeholder={t.contact.form.namePlaceholder}
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
               <div>
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">{t.contact.form.email} *</Label>
                 <Input
                   id="email"
                   name="email"
@@ -250,13 +254,13 @@ const Contact = () => {
                   required
                   disabled={isSubmitting}
                   className={`mt-2 ${errors.email ? 'border-red-500' : ''}`}
-                  placeholder="votre@email.com"
+                  placeholder={t.contact.form.emailPlaceholder}
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
 
               <div>
-                <Label htmlFor="phone">Téléphone</Label>
+                <Label htmlFor="phone">{t.contact.form.phone}</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -265,12 +269,12 @@ const Contact = () => {
                   onChange={handleChange}
                   disabled={isSubmitting}
                   className="mt-2"
-                  placeholder="+1 (514) 123-4567"
+                  placeholder={t.contact.form.phonePlaceholder}
                 />
               </div>
 
               <div>
-                <Label htmlFor="inquiryType">Nature de la demande</Label>
+                <Label htmlFor="inquiryType">{t.contact.form.inquiryType}</Label>
                 <select
                   id="inquiryType"
                   name="inquiryType"
@@ -279,18 +283,19 @@ const Contact = () => {
                   disabled={isSubmitting}
                   className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  <option value="">Sélectionnez (optionnel)</option>
-                  <option value="Devis">Demande de devis</option>
-                  <option value="Projet">Nouveau projet</option>
-                  <option value="Support">Support technique</option>
-                  <option value="Question">Question générale</option>
-                  <option value="Partenariat">Partenariat</option>
-                  <option value="Autre">Autre</option>
+                  <option value="">{t.contact.form.inquiryPlaceholder}</option>
+                  <option value="webDesign">{t.contact.form.inquiryTypes.webDesign}</option>
+                  <option value="webDev">{t.contact.form.inquiryTypes.webDev}</option>
+                  <option value="webApp">{t.contact.form.inquiryTypes.webApp}</option>
+                  <option value="branding">{t.contact.form.inquiryTypes.branding}</option>
+                  <option value="ecommerce">{t.contact.form.inquiryTypes.ecommerce}</option>
+                  <option value="backend">{t.contact.form.inquiryTypes.backend}</option>
+                  <option value="other">{t.contact.form.inquiryTypes.other}</option>
                 </select>
               </div>
 
               <div>
-                <Label htmlFor="subject">Sujet *</Label>
+                <Label htmlFor="subject">{t.contact.form.subject} *</Label>
                 <Input
                   id="subject"
                   name="subject"
@@ -299,13 +304,13 @@ const Contact = () => {
                   required
                   disabled={isSubmitting}
                   className={`mt-2 ${errors.subject ? 'border-red-500' : ''}`}
-                  placeholder="Objet de votre message"
+                  placeholder={t.contact.form.subjectPlaceholder}
                 />
                 {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
               </div>
 
               <div>
-                <Label htmlFor="message">Message *</Label>
+                <Label htmlFor="message">{t.contact.form.message} *</Label>
                 <Textarea
                   id="message"
                   name="message"
@@ -314,7 +319,7 @@ const Contact = () => {
                   required
                   disabled={isSubmitting}
                   className={`mt-2 min-h-[150px] ${errors.message ? 'border-red-500' : ''}`}
-                  placeholder="Décrivez votre projet ou votre question en détail..."
+                  placeholder={t.contact.form.messagePlaceholder}
                 />
                 {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
               </div>
@@ -346,7 +351,7 @@ const Contact = () => {
                   </>
                 ) : (
                   <>
-                    Envoyer mon message
+                    {isSubmitting ? t.contact.form.sending : t.contact.form.submit}
                     <Send className="ml-2 h-5 w-5" />
                   </>
                 )}

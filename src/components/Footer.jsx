@@ -1,4 +1,6 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 import { motion } from 'framer-motion';
 import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-card';
@@ -6,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
 const Footer = () => {
+  const { language } = useLanguage();
+  const t = useTranslations(language);
   const { toast } = useToast();
 
   const validateEmail = (email) => {

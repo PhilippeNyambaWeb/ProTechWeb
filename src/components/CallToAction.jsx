@@ -1,7 +1,11 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/lib/translations';
 import { motion } from 'framer-motion';
 
 const CallToAction = () => {
+  const { language } = useLanguage();
+  const t = useTranslations(language);
   return (
     <motion.p
       className='text-md text-white max-w-lg mx-auto'
