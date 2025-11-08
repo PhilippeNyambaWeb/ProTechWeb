@@ -66,11 +66,7 @@ const Header = () => {
         initial={{ y: -120 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[100px] flex items-center ${
-          isScrolled
-            ? 'glass-effect shadow-lg'
-            : 'bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 glass-effect shadow-lg h-[100px] flex items-center"
       >
         <nav className="container mx-auto px-4 w-full">
           <div className="flex items-center justify-between">
@@ -93,10 +89,10 @@ const Header = () => {
                 <motion.button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative text-sm font-medium transition-all duration-300 ${
+                  className={`relative text-sm font-bold transition-all duration-300 ${
                     activeSection === item.id
-                      ? 'text-secondary'
-                      : 'text-gray-700 hover:text-primary'
+                      ? 'text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                   whileHover={{ scale: 1.05 }}
                 >
@@ -104,7 +100,7 @@ const Header = () => {
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="activeSection"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary glow-effect"
+                      className="absolute -bottom-1 left-0 right-0 h-1 bg-secondary"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
@@ -117,7 +113,7 @@ const Header = () => {
             </div>
 
             <button
-              className="md:hidden text-gray-700 z-50"
+              className="md:hidden text-white z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
@@ -142,7 +138,7 @@ const Header = () => {
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   className={`text-3xl font-semibold transition-colors ${
-                    activeSection === item.id ? 'text-secondary glow-effect' : 'text-gray-800 hover:text-primary'
+                    activeSection === item.id ? 'text-secondary glow-effect' : 'text-white hover:text-secondary'
                   }`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}

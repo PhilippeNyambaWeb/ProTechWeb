@@ -78,10 +78,10 @@ const Services = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Nos Services
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Des solutions complètes pour tous vos besoins digitaux, de la conception à la mise en ligne.
           </p>
         </motion.div>
@@ -97,15 +97,15 @@ const Services = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="bg-gradient-to-br from-primary/20 to-secondary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
-                <service.icon className="text-primary" size={32} />
+              <div className="bg-gradient-to-br from-primary/30 to-secondary/30 w-16 h-16 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
+                <service.icon className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 mb-6">{service.description}</p>
+              <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+              <p className="text-gray-200 mb-6">{service.description}</p>
               <ul className="space-y-2 mb-6">
                 {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-sm text-gray-700">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                  <li key={feature} className="flex items-center text-sm text-gray-200">
+                    <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2" />
                     {feature}
                   </li>
                 ))}

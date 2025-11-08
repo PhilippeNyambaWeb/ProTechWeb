@@ -145,10 +145,10 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Contactez-Nous
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Prêt à démarrer votre projet ? Parlons-en ensemble et créons quelque chose d'extraordinaire.
           </p>
         </motion.div>
@@ -168,8 +168,8 @@ const Contact = () => {
                   <Mail className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-                  <p className="text-gray-600">contact@protechweb.ca</p>
+                  <h3 className="font-bold text-white mb-1">Email</h3>
+                  <p className="text-gray-200">contact@protechweb.ca</p>
                 </div>
               </div>
 
@@ -178,8 +178,8 @@ const Contact = () => {
                   <Phone className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Téléphone</h3>
-                  <p className="text-gray-600">+1 (514) 994-4689</p>
+                  <h3 className="font-bold text-white mb-1">Téléphone</h3>
+                  <p className="text-gray-200">+1 (514) 994-4689</p>
                 </div>
               </div>
 
@@ -188,15 +188,15 @@ const Contact = () => {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Adresse</h3>
-                  <p className="text-gray-600">2-545 Rue Saint-Germain</p>
-                  <p className="text-gray-600">Saint-Lauren, QC, H4L 3R3</p>
+                  <h3 className="font-bold text-white mb-1">Adresse</h3>
+                  <p className="text-gray-200">2-545 Rue Saint-Germain</p>
+                  <p className="text-gray-200">Saint-Lauren, QC, H4L 3R3</p>
                 </div>
               </div>
 
               <div className="backdrop-blur-sm bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8 border border-white/30">
-                <h3 className="font-bold text-gray-900 mb-3">Horaires d'ouverture</h3>
-                <div className="space-y-2 text-gray-700">
+                <h3 className="font-bold text-white mb-3">Horaires d'ouverture</h3>
+                <div className="space-y-2 text-gray-200">
                   <p>Lundi - Jeudi: 9h00 - 16h00</p>
                 </div>
               </div>

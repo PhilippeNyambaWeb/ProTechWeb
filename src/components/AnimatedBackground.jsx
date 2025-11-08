@@ -11,7 +11,7 @@ const AnimatedBackground = () => {
   ];
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
+    <div className="fixed inset-0 -z-10 overflow-hidden" style={{ background: '#484a4c' }}>
       {orbs.map((orb, index) => (
         <motion.div
           key={index}
@@ -36,7 +36,7 @@ const AnimatedBackground = () => {
         />
       ))}
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-transparent" />
     </div>
   );
 };

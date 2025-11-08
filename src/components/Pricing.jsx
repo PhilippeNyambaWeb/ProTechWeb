@@ -93,10 +93,10 @@ const Pricing = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Nos Tarifs
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Des forfaits transparents adaptés à vos besoins et votre budget. Tous nos projets incluent un suivi personnalisé.
           </p>
         </motion.div>
@@ -125,20 +125,20 @@ const Pricing = () => {
               )}
 
               <div className="mb-6">
-                <h3 className={`text-2xl font-bold mb-2 ${tier.highlighted ? 'text-primary' : 'text-gray-900'}`}>
+                <h3 className={`text-2xl font-bold mb-2 ${tier.highlighted ? 'text-primary' : 'text-white'}`}>
                   {tier.name}
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-200">
                   {tier.description}
                 </p>
               </div>
 
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className={`text-5xl font-bold ${tier.highlighted ? 'text-primary' : 'text-gray-900'}`}>
+                  <span className={`text-5xl font-bold ${tier.highlighted ? 'text-primary' : 'text-white'}`}>
                     ${tier.price}
                   </span>
-                  <span className="ml-2 text-gray-600">
+                  <span className="ml-2 text-gray-200">
                     /{tier.period}
                   </span>
                 </div>
@@ -153,7 +153,7 @@ const Pricing = () => {
                       }`}
                       size={20}
                     />
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-gray-200">
                       {feature}
                     </span>
                   </li>
@@ -178,7 +178,7 @@ const Pricing = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-12"
         >
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-200 mb-4">
             Besoin d'un forfait personnalisé ou d'un devis détaillé ?
           </p>
           <GlassButton
