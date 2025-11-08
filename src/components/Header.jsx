@@ -89,7 +89,7 @@ const Header = () => {
               <div className="flex flex-col items-start text-left">
                 <span className="text-2xl font-bold text-secondary leading-tight">ProTechWeb</span>
                 <span className="text-xs text-gray-300 leading-tight hidden sm:block">
-                  Professionnels des Technologies du Web
+                  {t.hero.tagline}
                 </span>
               </div>
             </motion.button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTranslations } from '@/lib/translations';
 import { motion } from 'framer-motion';
@@ -6,11 +6,21 @@ import { Facebook, Linkedin, Mail } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import LegalModal from '@/components/LegalModal';
 
 const Footer = () => {
   const { language } = useLanguage();
   const t = useTranslations(language);
   const { toast } = useToast();
+  const [legalModal, setLegalModal] = useState({ isOpen: false, type: null });
+
+  const openLegalModal = (type) => {
+    setLegalModal({ isOpen: true, type });
+  };
+
+  const closeLegalModal = () => {
+    setLegalModal({ isOpen: false, type: null });
+  };
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +57,7 @@ const Footer = () => {
   return (
     <footer className="glass-effect bg-gray-900/80 text-white pt-16 pb-8 border-t border-white/10">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div>
             <span className="text-2xl font-bold text-secondary mb-4 block">ProTechWeb</span>
             <p className="text-white mb-4">
@@ -88,15 +98,6 @@ const Footer = () => {
           </div>
 
           <div>
-            <span className="font-bold text-lg mb-4 block">{t.footer.company}</span>
-            <ul className="space-y-2 text-white">
-              <li><a href="#home" className="hover:text-secondary transition-colors">{t.footer.companyLinks.about}</a></li>
-              <li><a href="#contact" className="hover:text-secondary transition-colors">{t.footer.companyLinks.contact}</a></li>
-              <li><a href="#" className="hover:text-secondary transition-colors">{t.footer.companyLinks.careers}</a></li>
-            </ul>
-          </div>
-
-          <div>
             <span className="font-bold text-lg mb-4 block">{t.footer.newsletter}</span>
             <p className="text-white mb-4">
               {t.footer.newsletterDesc}
@@ -120,14 +121,29 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-white text-sm">
             <p>© 2025 ProTechWeb. {t.footer.rights}</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="/privacy" className="hover:text-secondary transition-colors">{t.footer.privacy}</a>
-              <a href="/terms" className="hover:text-secondary transition-colors">{t.footer.terms}</a>
-              <a href="/legal" className="hover:text-secondary transition-colors">{t.footer.legalNotice}</a>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-4 md:mt-0">
+              <button onClick={() => openLegalModal('privacy')} className="hover:text-secondary transition-colors">
+                {t.footer.privacy}
+              </button>
+              <button onClick={() => openLegalModal('terms')} className="hover:text-secondary transition-colors">
+                {t.footer.terms}
+              </button>
+              <button onClick={() => openLegalModal('legal')} className="hover:text-secondary transition-colors">
+                {t.footer.legalNotice}
+              </button>
+              <button onClick={() => openLegalModal('refund')} className="hover:text-secondary transition-colors">
+                {language === 'fr' ? 'Politique de remboursement' : 'Refund Policy'}
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      <LegalModal
+        isOpen={legalModal.isOpen}
+        onClose={closeLegalModal}
+        type={legalModal.type}
+      />
     </footer>
   );
 };
