@@ -15,12 +15,14 @@ const Header = () => {
 
       const sections = ['home', 'services', 'tarifs', 'contact'];
       let currentSection = 'home';
+      const scrollPosition = window.scrollY + 150;
 
-      for (const sectionId of sections) {
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sectionId = sections[i];
         const element = document.getElementById(sectionId);
         if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
+          const offsetTop = element.offsetTop;
+          if (scrollPosition >= offsetTop) {
             currentSection = sectionId;
             break;
           }
@@ -74,8 +76,13 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-4 cursor-pointer"
             >
-              <img src="/assets/Logo_ProtechWeb-No_Bgd.png" alt="ProTechWeb Logo" className="h-12 w-auto" />
-              <div className="flex flex-col">
+              <img
+                src="/assets/Logo_ProtechWeb-No_Bgd.png"
+                alt="ProTechWeb Logo"
+                className="h-12 w-auto"
+                style={{ background: 'white', borderRadius: '25px', padding: '3px' }}
+              />
+              <div className="flex flex-col items-start text-left">
                 <span className="text-2xl font-bold text-secondary leading-tight">ProTechWeb</span>
                 <span className="text-xs text-gray-300 leading-tight hidden sm:block">
                   Professionnels des Technologies du Web
