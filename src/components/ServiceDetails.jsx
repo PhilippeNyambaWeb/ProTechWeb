@@ -1,19 +1,23 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { GlassButton } from '@/components/ui/glass-card';
 
-const ServiceDetails = ({ service, isOpen, onClose }) => {
+const ServiceDetails = ({ service, isOpen, onClose, onSelect }) => {
   if (!service) return null;
 
-  const scrollToContact = () => {
-    onClose();
-    setTimeout(() => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 300);
+  const handleSelectService = () => {
+    if (onSelect) {
+      onSelect(service.title);
+    } else {
+      onClose();
+      setTimeout(() => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    }
   };
 
   const serviceDetails = {
@@ -223,18 +227,18 @@ const ServiceDetails = ({ service, isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 p-6 md:p-8 bg-gray-50">
+              <div className="border-t border-gray-200 p-6 md:p-8 glass-effect">
                 <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
                   <p className="text-gray-700 text-center sm:text-left">
                     Intéressé par ce service ? Discutons de votre projet.
                   </p>
-                  <Button
-                    onClick={scrollToContact}
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 w-full sm:w-auto"
+                  <GlassButton
+                    variant="primary"
+                    onClick={handleSelectService}
+                    className="px-8 py-3 w-full sm:w-auto"
                   >
                     Demander un devis
-                  </Button>
+                  </GlassButton>
                 </div>
               </div>
             </div>

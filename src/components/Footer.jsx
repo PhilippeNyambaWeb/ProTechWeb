@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { GlassButton } from '@/components/ui/glass-card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -41,7 +41,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8">
+    <footer className="glass-effect bg-gray-900/80 text-white pt-16 pb-8 border-t border-white/10">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
@@ -113,10 +113,10 @@ const Footer = () => {
                 required
                 className="bg-gray-800 border-gray-700 text-white"
               />
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
+              <GlassButton variant="primary" type="submit" className="w-full">
                 <Mail className="mr-2 h-4 w-4" />
                 S'abonner
-              </Button>
+              </GlassButton>
             </form>
           </div>
         </div>

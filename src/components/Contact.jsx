@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { GlassCard, GlassButton } from '@/components/ui/glass-card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import { useScroll } from '@/contexts/ScrollContext';
 
 const Contact = () => {
   const { toast } = useToast();
+  const { formPrefill, clearFormPrefill } = useScroll();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,6 +23,18 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionId, setSubmissionId] = useState('');
+
+  useEffect(() => {
+    if (formPrefill && (formPrefill.inquiryType || formPrefill.subject || formPrefill.message)) {
+      setFormData(prev => ({
+        ...prev,
+        inquiryType: formPrefill.inquiryType || prev.inquiryType,
+        subject: formPrefill.subject || prev.subject,
+        message: formPrefill.message || prev.message
+      }));
+      clearFormPrefill();
+    }
+  }, [formPrefill, clearFormPrefill]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -122,7 +136,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="min-h-screen py-20 flex items-center">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -140,11 +154,13 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          <motion.div
+          <GlassCard
+            as={motion.div}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="p-8"
           >
             <div className="space-y-8">
               <div className="flex items-start space-x-4">
@@ -178,22 +194,24 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 mt-8">
+              <div className="backdrop-blur-sm bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8 border border-white/30">
                 <h3 className="font-bold text-gray-900 mb-3">Horaires d'ouverture</h3>
                 <div className="space-y-2 text-gray-700">
                   <p>Lundi - Jeudi: 9h00 - 16h00</p>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </GlassCard>
 
-          <motion.div
+          <GlassCard
+            as={motion.div}
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="p-8"
           >
-            <form onSubmit={handleSubmit} className="space-y-6 bg-gray-50 rounded-xl p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="hidden" aria-hidden="true">
                 <Input
                   id="website"
@@ -309,10 +327,10 @@ const Contact = () => {
                 </div>
               )}
 
-              <Button
+              <GlassButton
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90"
-                size="lg"
+                variant="accent"
+                className="w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -332,13 +350,13 @@ const Contact = () => {
                     <Send className="ml-2 h-5 w-5" />
                   </>
                 )}
-              </Button>
+              </GlassButton>
 
               <p className="text-xs text-center text-gray-500">
                 En soumettant ce formulaire, vous acceptez que nous traitions vos données conformément à notre politique de confidentialité.
               </p>
             </form>
-          </motion.div>
+          </GlassCard>
         </div>
       </div>
     </section>

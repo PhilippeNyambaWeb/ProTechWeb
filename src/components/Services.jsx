@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Code2, Smartphone, Palette, Database, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { GlassCard, GlassButton } from '@/components/ui/glass-card';
+import { useScroll } from '@/contexts/ScrollContext';
 import ServiceDetails from '@/components/ServiceDetails';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { prefillContactForm } = useScroll();
 
   const handleLearnMore = (service) => {
     setSelectedService(service);
@@ -16,6 +18,15 @@ const Services = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedService(null), 300);
+  };
+
+  const handleServiceSelect = (serviceTitle) => {
+    prefillContactForm({
+      inquiryType: 'Devis',
+      subject: `Service: ${serviceTitle}`,
+      message: `Je suis intéressé par vos services de ${serviceTitle}. Voici plus de détails sur mes besoins:\n\n`
+    });
+    closeModal();
   };
 
   const services = [
@@ -58,7 +69,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="min-h-screen py-20 flex items-center">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -77,16 +88,16 @@ const Services = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <motion.div
+            <GlassCard
               key={service.title}
+              className="p-8"
+              as={motion.div}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
             >
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <div className="bg-gradient-to-br from-primary/20 to-secondary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
                 <service.icon className="text-primary" size={32} />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
@@ -99,17 +110,23 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-              <Button variant="outline" className="w-full group" onClick={() => handleLearnMore(service)}>
-                En savoir plus
-                <motion.span
-                  className="ml-2"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.5 }}
-                >
-                  →
-                </motion.span>
-              </Button>
-            </motion.div>
+              <GlassButton
+                variant="secondary"
+                onClick={() => handleLearnMore(service)}
+                className="w-full"
+              >
+                <span className="flex items-center justify-center">
+                  En savoir plus
+                  <motion.span
+                    className="ml-2"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+              </GlassButton>
+            </GlassCard>
           ))}
         </div>
       </div>
@@ -118,6 +135,7 @@ const Services = () => {
         service={selectedService}
         isOpen={isModalOpen}
         onClose={closeModal}
+        onSelect={handleServiceSelect}
       />
     </section>
   );

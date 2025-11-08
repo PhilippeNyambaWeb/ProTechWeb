@@ -5,25 +5,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* #ffffff */
-    --foreground: 209 31% 25%; /* Slightly darker than primary for text */
+    --background: 0 0% 100%;
+    --foreground: 209 31% 25%;
     --card: 0 0% 100%;
     --card-foreground: 209 31% 25%;
     --popover: 0 0% 100%;
     --popover-foreground: 209 31% 25%;
-    --primary: 209 31% 35%; /* #3e5c76 */
+    --primary: 209 31% 35%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 202 71% 76%; /* #a4d3ee */
+    --secondary: 202 71% 76%;
     --secondary-foreground: 209 31% 35%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 202 71% 76%; /* #a4d3ee */
+    --accent: 202 71% 76%;
     --accent-foreground: 209 31% 35%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 202 71% 76%; /* #a4d3ee */
+    --ring: 202 71% 76%;
     --radius: 0.5rem;
   }
 }
@@ -40,10 +40,76 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 120px; /* Adjust this value to match your header's height */
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-/* Ensure the hero section content is not overlapped by the header */
-#home {
-    padding-top: 120px;
+body {
+  overflow-x: hidden;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(122, 211, 232, 0.3);
+  transform: translateY(-5px);
+}
+
+.glass-button {
+  background: rgba(74, 124, 140, 0.8);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+  background: rgba(74, 124, 140, 1);
+  box-shadow: 0 8px 24px rgba(74, 124, 140, 0.4);
+  transform: scale(1.05);
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(125, 211, 232, 0.5),
+              0 0 40px rgba(125, 211, 232, 0.3),
+              0 0 60px rgba(125, 211, 232, 0.1);
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+  .glass-effect,
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-effect,
+  .glass-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }

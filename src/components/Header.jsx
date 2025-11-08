@@ -1,22 +1,38 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
+import { GlassButton } from '@/components/ui/glass-card';
+import { useScroll } from '@/contexts/ScrollContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { toast } = useToast();
+  const { activeSection, scrollToSection, setActiveSection } = useScroll();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      const sections = ['home', 'about', 'services', 'tarifs', 'contact'];
+      let currentSection = 'home';
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            currentSection = sectionId;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [setActiveSection]);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -25,21 +41,24 @@ const Header = () => {
       document.body.style.overflow = 'auto';
     }
   }, [isMobileMenuOpen]);
-  
-  const handleButtonClick = () => {
-    toast({
-      title: "Fonctionnalité à venir !",
-      description: "🚧 Cette fonctionnalité n'est pas encore implémentée—mais ne vous inquiétez pas ! Vous pouvez la demander dans votre prochain message ! 🚀",
-    });
-  };
 
   const navItems = [
-    { label: 'Accueil', href: '#home' },
-    { label: 'À propos', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Tarifs', href: '#tarifs' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Accueil', id: 'home' },
+    { label: 'À propos', id: 'about' },
+    { label: 'Services', id: 'services' },
+    { label: 'Tarifs', id: 'tarifs' },
+    { label: 'Contact', id: 'contact' },
   ];
+
+  const handleNavClick = (sectionId) => {
+    scrollToSection(sectionId);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleDevisClick = () => {
+    scrollToSection('contact');
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -47,39 +66,60 @@ const Header = () => {
         initial={{ y: -120 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[120px] flex items-center ${
-          isScrolled ? 'bg-white shadow-md' : 'bg-white'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[100px] flex items-center ${
+          isScrolled
+            ? 'glass-effect shadow-lg'
+            : 'bg-transparent'
         }`}
       >
         <nav className="container mx-auto px-4 w-full">
           <div className="flex items-center justify-between">
-            <motion.a href="#home" whileHover={{ scale: 1.05 }} className="flex items-center space-x-4">
-              <img src="/assets/Logo_ProtechWeb-No_Bgd.png" alt="ProTechWeb Logo" className="h-14 w-auto" />
+            <motion.button
+              onClick={() => scrollToSection('home')}
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center space-x-4 cursor-pointer"
+            >
+              <img src="/assets/Logo_ProtechWeb-No_Bgd.png" alt="ProTechWeb Logo" className="h-12 w-auto" />
               <div className="flex flex-col">
-                <span className="text-3xl font-bold text-primary leading-tight">ProTechWeb</span>
-                <span className="text-sm text-gray-500 leading-tight">Professionnels des Technologies du Web</span>
+                <span className="text-2xl font-bold text-primary leading-tight">ProTechWeb</span>
+                <span className="text-xs text-gray-600 leading-tight hidden sm:block">
+                  Professionnels des Technologies du Web
+                </span>
               </div>
-            </motion.a>
+            </motion.button>
 
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-gray-700 hover:text-primary transition-colors duration-200 font-medium"
+                <motion.button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`relative text-sm font-medium transition-all duration-300 ${
+                    activeSection === item.id
+                      ? 'text-secondary'
+                      : 'text-gray-700 hover:text-primary'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
                 >
                   {item.label}
-                </a>
+                  {activeSection === item.id && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary glow-effect"
+                      initial={false}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
               ))}
-              <Button onClick={handleButtonClick} className="bg-primary hover:bg-primary/90">
+              <GlassButton variant="primary" onClick={handleDevisClick} className="px-6 py-2 text-sm">
                 Devis Gratuit
-              </Button>
+              </GlassButton>
             </div>
 
             <button
               className="md:hidden text-gray-700 z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -94,22 +134,29 @@ const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 glass-effect z-40 flex flex-col items-center justify-center md:hidden backdrop-blur-2xl"
           >
             <div className="flex flex-col items-center space-y-8">
               {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-3xl font-semibold text-gray-800 hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <motion.button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`text-3xl font-semibold transition-colors ${
+                    activeSection === item.id ? 'text-secondary glow-effect' : 'text-gray-800 hover:text-primary'
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {item.label}
-                </a>
+                </motion.button>
               ))}
-              <Button onClick={() => { handleButtonClick(); setIsMobileMenuOpen(false); }} size="lg" className="mt-8 bg-primary hover:bg-primary/90 text-xl px-8 py-6">
+              <GlassButton
+                variant="primary"
+                onClick={handleDevisClick}
+                className="mt-8 text-xl px-12 py-4"
+              >
                 Devis Gratuit
-              </Button>
+              </GlassButton>
             </div>
           </motion.div>
         )}
