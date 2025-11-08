@@ -12,12 +12,13 @@ const Pricing = () => {
   const t = useTranslations(language);
 
   const handlePlanSelect = (planName, price) => {
+    const priceStr = price || planName;
     prefillContactForm({
       inquiryType: language === 'fr' ? 'Devis' : 'Quote',
-      subject: `${language === 'fr' ? 'Forfait' : 'Plan'} ${planName} - ${price}${t.pricing.perProject}`,
+      subject: `${language === 'fr' ? 'Forfait' : 'Plan'} ${planName} - ${priceStr}`,
       message: language === 'fr'
-        ? `Je suis intéressé par le forfait ${planName} à ${price}. Voici les détails de mon projet:\n\n`
-        : `I am interested in the ${planName} plan at ${price}. Here are my project details:\n\n`
+        ? `Je suis intéressé par le forfait ${planName}. Voici les détails de mon projet:\n\n`
+        : `I am interested in the ${planName} plan. Here are my project details:\n\n`
     });
   };
 
@@ -33,16 +34,24 @@ const Pricing = () => {
 
   const pricingTiers = [
     {
-      ...t.pricing.starter,
-      highlighted: false
+      ...t.pricing.starterMini,
+      highlighted: false,
+      isStarter: true
+    },
+    {
+      ...t.pricing.starterPlus,
+      highlighted: false,
+      isStarter: true
     },
     {
       ...t.pricing.professional,
-      highlighted: true
+      highlighted: true,
+      isStarter: false
     },
     {
       ...t.pricing.enterprise,
-      highlighted: false
+      highlighted: false,
+      isStarter: false
     }
   ];
 
@@ -64,7 +73,7 @@ const Pricing = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {pricingTiers.map((tier, index) => (
             <motion.div
               key={index}
@@ -75,29 +84,52 @@ const Pricing = () => {
               className="h-full"
             >
               <GlassCard
-                className={`h-full flex flex-col p-8 relative ${
+                className={`h-full flex flex-col p-6 relative ${
                   tier.highlighted ? 'ring-2 ring-secondary' : ''
                 }`}
               >
                 {tier.highlighted && tier.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-bold">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-4 py-1 rounded-full text-sm font-bold whitespace-nowrap">
                     {tier.popular}
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">{tier.title}</h3>
-                  <div className="flex items-baseline mb-4">
-                    <span className="text-4xl font-bold text-secondary">{tier.price}</span>
-                    <span className="text-white/60 ml-2">{tier.priceNote}</span>
-                  </div>
-                  <p className="text-white/70">{tier.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-2">{tier.title}</h3>
+
+                  {tier.isStarter ? (
+                    <div className="mb-4 space-y-2">
+                      <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                        <div className="flex items-baseline justify-between mb-1">
+                          <span className="text-sm text-white/60">{language === 'fr' ? 'Mise en place' : 'Setup'}</span>
+                          <span className="text-lg font-bold text-secondary">{tier.setupPrice}</span>
+                        </div>
+                        <p className="text-xs text-white/50">{tier.priceNote}</p>
+                        <p className="text-xs text-white/70 mt-1">{tier.setupDetails}</p>
+                      </div>
+                      <div className="bg-white/5 p-3 rounded-lg border border-white/10">
+                        <div className="flex items-baseline justify-between mb-1">
+                          <span className="text-sm text-white/60">{language === 'fr' ? 'Mensuel' : 'Monthly'}</span>
+                          <span className="text-lg font-bold text-secondary">{tier.monthlyPrice}</span>
+                        </div>
+                        <p className="text-xs text-white/50">{tier.monthlyNote}</p>
+                        <p className="text-xs text-white/70 mt-1">{tier.monthlyDetails}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-baseline mb-4">
+                      <span className="text-3xl font-bold text-secondary">{tier.price}</span>
+                      <span className="text-white/60 ml-2 text-sm">{tier.priceNote}</span>
+                    </div>
+                  )}
+
+                  <p className="text-white/70 text-sm">{tier.description}</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-grow">
+                <ul className="space-y-2 mb-6 flex-grow">
                   {tier.features.map((feature, i) => (
-                    <li key={i} className="flex items-start text-white/80">
-                      <Check className="w-5 h-5 text-secondary mr-3 flex-shrink-0 mt-0.5" />
+                    <li key={i} className="flex items-start text-white/80 text-sm">
+                      <Check className="w-4 h-4 text-secondary mr-2 flex-shrink-0 mt-0.5" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -105,8 +137,8 @@ const Pricing = () => {
 
                 <GlassButton
                   variant={tier.highlighted ? 'accent' : 'secondary'}
-                  onClick={() => handlePlanSelect(tier.title, tier.price)}
-                  className="w-full py-3"
+                  onClick={() => handlePlanSelect(tier.title, tier.price || tier.setupPrice)}
+                  className="w-full py-2.5 text-sm"
                 >
                   {t.pricing.cta}
                 </GlassButton>

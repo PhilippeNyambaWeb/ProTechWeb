@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const LegalModal = ({ isOpen, onClose, type }) => {
   const { language } = useLanguage();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   const content = {
     privacy: {
@@ -189,55 +200,55 @@ const LegalModal = ({ isOpen, onClose, type }) => {
 
   const data = content[type]?.[language];
 
+  if (!data) return null;
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
             onClick={onClose}
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: 'spring', duration: 0.5 }}
-            className="fixed inset-4 md:inset-8 lg:inset-16 xl:inset-24 backdrop-blur-2xl bg-black/40 rounded-3xl shadow-2xl z-50 overflow-hidden border border-white/20"
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-4xl max-h-[90vh] backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden"
           >
-            <div className="h-full flex flex-col">
-              <div className="backdrop-blur-md bg-white/10 text-white p-6 md:p-8 border-b border-white/20 flex items-center justify-between">
-                <h2 className="text-3xl font-bold">{data?.title}</h2>
-                <button
-                  onClick={onClose}
-                  className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
-                  aria-label="Close"
-                >
-                  <X size={24} />
-                </button>
-              </div>
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
+              <h2 className="text-2xl md:text-3xl font-bold text-white">{data.title}</h2>
+              <button
+                onClick={onClose}
+                className="bg-white/10 hover:bg-white/20 rounded-full p-2 transition-all duration-200 hover:scale-110"
+                aria-label="Close"
+              >
+                <X size={24} className="text-white" />
+              </button>
+            </div>
 
-              <div className="flex-1 overflow-y-auto p-6 md:p-8">
-                <div className="max-w-3xl mx-auto space-y-6">
-                  {data?.sections.map((section, index) => (
-                    <div key={index} className="backdrop-blur-sm bg-white/5 p-6 rounded-2xl border border-white/10">
-                      <h3 className="text-xl font-bold text-white mb-3">{section.title}</h3>
-                      <p className="text-white/80 leading-relaxed whitespace-pre-line">{section.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-white/20 p-4 md:p-6 backdrop-blur-md bg-white/5 text-center">
-                <p className="text-white/60 text-sm">
-                  {language === 'fr' ? 'Dernière mise à jour: Novembre 2025' : 'Last updated: November 2025'}
-                </p>
+            <div className="flex-1 overflow-y-auto p-6 md:p-8">
+              <div className="space-y-6">
+                {data.sections.map((section, index) => (
+                  <div key={index} className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-3">{section.title}</h3>
+                    <p className="text-white/80 leading-relaxed whitespace-pre-line">{section.text}</p>
+                  </div>
+                ))}
               </div>
             </div>
+
+            <div className="border-t border-white/10 p-4 bg-white/5 text-center">
+              <p className="text-white/60 text-sm">
+                {language === 'fr' ? 'Dernière mise à jour: Novembre 2025' : 'Last updated: November 2025'}
+              </p>
+            </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

@@ -209,26 +209,47 @@ export const translations = {
     pricing: {
       title: 'Nos Tarifs',
       subtitle: 'Des forfaits transparents adaptés à vos besoins et votre budget. Tous nos projets incluent un suivi personnalisé.',
-      starter: {
-        title: 'Essentiel',
-        price: '$499',
-        priceNote: '/projet',
-        description: 'Parfait pour les petites entreprises et les startups qui débutent en ligne.',
+      starterMini: {
+        title: 'Essentiel Mini',
+        setupPrice: '$149 - $199',
+        monthlyPrice: '$25 - $30',
+        priceNote: 'une seule fois',
+        monthlyNote: '/ mois',
+        description: 'Parfait pour les indépendants et les très petites entreprises qui veulent une présence simple et efficace.',
+        setupDetails: 'Création du site, design moderne et configuration du domaine',
+        monthlyDetails: 'Hébergement, mises à jour mineures, support par email',
         features: [
-          'Site web responsive (jusqu\'à 5 pages)',
+          'Site web responsive (1 à 3 pages)',
+          'Design professionnel',
+          'Optimisation mobile',
+          'Formulaire de contact',
+          'SEO de base',
+          'Hébergement 1 an inclus'
+        ]
+      },
+      starterPlus: {
+        title: 'Essentiel Plus',
+        setupPrice: '$249 - $349',
+        monthlyPrice: '$30 - $40',
+        priceNote: 'une seule fois',
+        monthlyNote: '/ mois',
+        description: 'Idéal pour les petites entreprises qui veulent un site plus complet et mieux référencé.',
+        setupDetails: 'Design sur mesure, intégration des pages supplémentaires, optimisation SEO de base',
+        monthlyDetails: 'Hébergement, mises à jour mineures, support par email',
+        features: [
+          'Site web responsive (4 à 5 pages)',
           'Design moderne et professionnel',
           'Optimisation mobile',
           'Formulaire de contact',
           'SEO de base',
-          'Hébergement 1 an inclus',
-          'Support par email'
+          'Hébergement 1 an inclus'
         ]
       },
       professional: {
         title: 'Pro',
-        price: '$1299',
-        priceNote: '/projet',
-        description: 'La solution complète pour les entreprises en croissance qui veulent se démarquer.',
+        price: '≈ $2299',
+        priceNote: '/ projet',
+        description: 'Solution complète pour les entreprises en croissance.',
         popular: 'Le plus populaire',
         features: [
           'Site web responsive (jusqu\'à 10 pages)',
@@ -245,15 +266,13 @@ export const translations = {
       },
       enterprise: {
         title: 'Premium',
-        price: '$2499',
-        priceNote: '/projet',
+        price: '≈ $10499',
+        priceNote: '/ projet',
         description: 'Solution entreprise avec fonctionnalités avancées et accompagnement personnalisé.',
         features: [
-          'Site web ou application web complète',
-          'Pages illimitées',
-          'Design et branding complet',
-          'Développement sur mesure',
-          'Base de données et backend',
+          'Site web ou application web complète (pages illimitées)',
+          'Design & branding complet',
+          'Développement backend & base de données',
           'Espace membre / authentification',
           'API et intégrations tierces',
           'E-commerce (si applicable)',
@@ -560,52 +579,86 @@ export const translations = {
     pricing: {
       title: 'Our Pricing',
       subtitle: 'Transparent packages tailored to your needs and budget. All our projects include personalized follow-up.',
-      starter: {
-        title: 'Essential',
-        price: '$499',
-        priceNote: '/project',
-        description: 'Perfect to start your online presence',
+      starterMini: {
+        title: 'Essential Mini',
+        setupPrice: '$149 - $199',
+        monthlyPrice: '$25 - $30',
+        priceNote: 'one-time',
+        monthlyNote: '/ month',
+        description: 'Perfect for freelancers and very small businesses who want a simple and effective presence.',
+        setupDetails: 'Site creation, modern design and domain configuration',
+        monthlyDetails: 'Hosting, minor updates, email support',
         features: [
-          'Showcase site up to 5 pages',
-          'Responsive design',
+          'Responsive website (1 to 3 pages)',
+          'Professional design',
+          'Mobile optimization',
           'Contact form',
           'Basic SEO',
-          '1 year hosting included',
-          '30 days support'
+          '1 year hosting included'
+        ]
+      },
+      starterPlus: {
+        title: 'Essential Plus',
+        setupPrice: '$249 - $349',
+        monthlyPrice: '$30 - $40',
+        priceNote: 'one-time',
+        monthlyNote: '/ month',
+        description: 'Ideal for small businesses that want a more complete and better referenced site.',
+        setupDetails: 'Custom design, additional page integration, basic SEO optimization',
+        monthlyDetails: 'Hosting, minor updates, email support',
+        features: [
+          'Responsive website (4 to 5 pages)',
+          'Modern and professional design',
+          'Mobile optimization',
+          'Contact form',
+          'Basic SEO',
+          '1 year hosting included'
         ]
       },
       professional: {
-        title: 'Professional',
-        description: 'For growing businesses',
-        popular: 'Popular',
+        title: 'Pro',
+        price: '≈ $2299',
+        priceNote: '/ project',
+        description: 'Complete solution for growing businesses.',
+        popular: 'Most Popular',
         features: [
-          'Site up to 10 pages',
-          'Custom design',
-          'Integrated blog',
+          'Responsive website (up to 10 pages)',
+          'Premium custom design',
+          'Animation and micro-interactions',
+          'Content management system (CMS)',
+          'Advanced analytics integration',
           'Advanced SEO',
+          'Custom forms',
           '1 year hosting included',
-          '90 days support',
-          'Third-party integrations',
-          'Advanced analytics'
+          'Priority support (email & phone)',
+          '3 months maintenance included'
         ]
       },
       enterprise: {
-        title: 'Enterprise',
-        description: 'Custom solutions for large companies',
+        title: 'Premium',
+        price: '≈ $10499',
+        priceNote: '/ project',
+        description: 'Enterprise solution with advanced features and personalized support.',
         features: [
-          'Unlimited pages',
-          'Complex web application',
-          'Custom architecture',
-          'API and integrations',
-          'Priority support',
-          'Team training',
-          'Ongoing maintenance',
-          'Enhanced security'
+          'Complete website or web application (unlimited pages)',
+          'Complete design & branding',
+          'Backend development & database',
+          'Member area / authentication',
+          'API and third-party integrations',
+          'E-commerce (if applicable)',
+          'Premium SEO & content strategy',
+          'Complete training',
+          '1 year hosting included',
+          'Dedicated 24/7 support',
+          '6 months maintenance included'
         ]
       },
       custom: 'Contact us',
       cta: 'Choose this plan',
-      perMonth: '/month'
+      ctaAlt: 'Request a free quote',
+      perMonth: '/month',
+      perProject: '/project',
+      customQuestion: 'Need a custom plan or detailed quote?'
     },
     // Contact
     contact: {
