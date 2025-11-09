@@ -35,7 +35,7 @@ const Hero = () => {
           style={{ objectPosition: 'center center' }}
         >
           <source
-            src="https://videos.pexels.com/video-files/3191752/3191752-sd_640_360_25fps.mp4"
+            src="/assets/banner-video.jpg"
             type="video/mp4"
           />
           Votre navigateur ne supporte pas la vidéo.
