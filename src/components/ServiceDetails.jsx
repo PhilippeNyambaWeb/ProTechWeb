@@ -43,10 +43,9 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelectService }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-4xl my-auto max-h-[85vh] backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden z-10"
+            className="relative w-full max-w-4xl my-auto max-h-[85vh] backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-2xl shadow-2xl border border-white/20 flex flex-col z-10"
           >
-            <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5 flex-shrink-0">
                 <div className="flex items-center space-x-4">
                   <div className="bg-white/20 p-3 rounded-full">
                     <service.icon size={28} className="text-white" />
@@ -63,9 +62,9 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelectService }) => {
                 >
                   <X size={24} className="text-white" />
                 </button>
-              </div>
+            </div>
 
-              <div className="flex-1 overflow-y-auto p-6 md:p-8">
+            <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
                 <div className="max-w-4xl mx-auto space-y-8">
                   <section className="backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
                     <h3 className="text-2xl font-bold text-white mb-3">{t.serviceDetails.overview}</h3>
@@ -124,9 +123,9 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelectService }) => {
                     </ul>
                   </section>
                 </div>
-              </div>
+            </div>
 
-              <div className="border-t border-white/20 p-6 md:p-8 backdrop-blur-md bg-white/10">
+            <div className="border-t border-white/20 p-6 md:p-8 backdrop-blur-md bg-white/10 flex-shrink-0">
                 <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
                   <p className="text-white text-center sm:text-left">
                     {t.serviceDetails.cta}
@@ -139,7 +138,6 @@ const ServiceDetails = ({ service, isOpen, onClose, onSelectService }) => {
                     {t.serviceDetails.quote}
                   </GlassButton>
                 </div>
-              </div>
             </div>
           </motion.div>
         </div>
