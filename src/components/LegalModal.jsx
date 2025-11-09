@@ -205,7 +205,7 @@ const LegalModal = ({ isOpen, onClose, type }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -218,7 +218,7 @@ const LegalModal = ({ isOpen, onClose, type }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-4xl max-h-[90vh] backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden"
+            className="relative w-full max-w-4xl my-auto max-h-[85vh] backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden z-10"
           >
             <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
               <h2 className="text-2xl md:text-3xl font-bold text-white">{data.title}</h2>

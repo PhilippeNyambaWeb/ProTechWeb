@@ -22,7 +22,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-[100px]"
     >
       <div className="absolute inset-0 z-0">
         <video

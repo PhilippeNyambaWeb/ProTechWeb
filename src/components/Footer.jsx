@@ -87,14 +87,18 @@ const Footer = () => {
             </div>
           </div>
 
-          <div>
-            <span className="font-bold text-lg mb-4 block">{t.footer.services}</span>
-            <ul className="space-y-2 text-white">
-              <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.webDesign}</a></li>
-              <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.development}</a></li>
-              <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.applications}</a></li>
-              <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.seoMarketing}</a></li>
-            </ul>
+          <div className="flex justify-center">
+            <div>
+              <span className="font-bold text-lg mb-4 block text-center">{t.footer.services}</span>
+              <ul className="space-y-2 text-white text-center">
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.webDesign}</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.webDev}</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.webApps}</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.branding}</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.ecommerce}</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">{t.footer.servicesLinks.backend}</a></li>
+              </ul>
+            </div>
           </div>
 
           <div>

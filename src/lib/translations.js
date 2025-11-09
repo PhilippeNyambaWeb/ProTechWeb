@@ -339,10 +339,12 @@ export const translations = {
       quickLinks: 'Liens rapides',
       services: 'Services',
       servicesLinks: {
-        webDesign: 'Design Web',
-        development: 'Développement',
-        applications: 'Applications',
-        seoMarketing: 'SEO & Marketing'
+        webDesign: 'Design de Sites Web',
+        webDev: 'Développement Web',
+        webApps: 'Applications Web',
+        branding: 'Identité Visuelle',
+        ecommerce: 'E-commerce',
+        backend: 'Solutions Backend'
       },
       company: 'Entreprise',
       companyLinks: {
@@ -710,9 +712,11 @@ export const translations = {
       services: 'Services',
       servicesLinks: {
         webDesign: 'Web Design',
-        development: 'Development',
-        applications: 'Applications',
-        seoMarketing: 'SEO & Marketing'
+        webDev: 'Web Development',
+        webApps: 'Web Applications',
+        branding: 'Visual Identity',
+        ecommerce: 'E-commerce',
+        backend: 'Backend Solutions'
       },
       company: 'Company',
       companyLinks: {
