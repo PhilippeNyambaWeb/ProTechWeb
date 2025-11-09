@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -202,7 +203,7 @@ const LegalModal = ({ isOpen, onClose, type }) => {
 
   if (!data) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
@@ -250,7 +251,8 @@ const LegalModal = ({ isOpen, onClose, type }) => {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
