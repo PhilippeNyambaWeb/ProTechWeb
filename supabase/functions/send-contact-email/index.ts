@@ -154,7 +154,7 @@ contact@protechweb.ca
           "Authorization": `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: "ProTechWeb <noreply@protechweb.ca>",
+          from: "ProTechWeb <onboarding@resend.dev>",
           to: ["contact@protechweb.ca"],
           reply_to: email,
           subject: `[${priority.toUpperCase()}] ${subject} - Réf: ${submissionId.substring(0, 8)}`,
@@ -169,7 +169,7 @@ contact@protechweb.ca
           "Authorization": `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: "ProTechWeb <noreply@protechweb.ca>",
+          from: "ProTechWeb <onboarding@resend.dev>",
           to: [email],
           subject: "Confirmation de réception - ProTechWeb",
           text: confirmationEmailBody,
