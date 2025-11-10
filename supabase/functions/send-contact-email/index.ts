@@ -154,7 +154,7 @@ contact@protechweb.ca
           "Authorization": `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: "ProTechWeb <noreply@protechweb.ca>",
+          from: "ProTechWeb <onboarding@resend.dev>",
           to: ["contact@protechweb.ca"],
           reply_to: email,
           subject: `[${priority.toUpperCase()}] ${subject} - Réf: ${submissionId.substring(0, 8)}`,
@@ -169,7 +169,7 @@ contact@protechweb.ca
           "Authorization": `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: "ProTechWeb <noreply@protechweb.ca>",
+          from: "ProTechWeb <onboarding@resend.dev>",
           to: [email],
           subject: "Confirmation de réception - ProTechWeb",
           text: confirmationEmailBody,
@@ -181,11 +181,19 @@ contact@protechweb.ca
         confirmationPromise
       ]);
 
+      const notificationResult = await notificationResponse.json();
+      const confirmationResult = await confirmationResponse.json();
+
       if (!notificationResponse.ok) {
-        console.error("Notification email error:", await notificationResponse.text());
+        console.error("Notification email error:", notificationResponse.status, notificationResult);
+      } else {
+        console.log("Notification email sent successfully:", notificationResult);
       }
+
       if (!confirmationResponse.ok) {
-        console.error("Confirmation email error:", await confirmationResponse.text());
+        console.error("Confirmation email error:", confirmationResponse.status, confirmationResult);
+      } else {
+        console.log("Confirmation email sent successfully:", confirmationResult);
       }
     }
 
