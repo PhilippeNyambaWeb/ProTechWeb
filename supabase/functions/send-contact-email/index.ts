@@ -144,9 +144,59 @@ Saint-Laurent, QC, H4L 3R3
 contact@protechweb.ca
     `;
 
+    const brevoApiKey = Deno.env.get("BREVO_API_KEY");
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    let provider: "brevo" | "resend" | "none" = "none";
+    let notificationSent = false;
+    let confirmationSent = false;
 
-    if (resendApiKey) {
+    if (brevoApiKey) {
+      const brevoHeaders = {
+        "Content-Type": "application/json",
+        "api-key": brevoApiKey,
+      } as Record<string, string>;
+
+      const notificationPromise = fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: brevoHeaders,
+        body: JSON.stringify({
+          sender: { name: "ProTechWeb", email: "noreply@protechweb.ca" },
+          to: [{ email: "contact@protechweb.ca" }],
+          replyTo: { email },
+          subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
+          textContent: notificationEmailBody,
+        }),
+      });
+
+      const confirmationPromise = fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: brevoHeaders,
+        body: JSON.stringify({
+          sender: { name: "ProTechWeb", email: "noreply@protechweb.ca" },
+          to: [{ email }],
+          subject: "Confirmation de rAcception - ProTechWeb",
+          textContent: confirmationEmailBody,
+        }),
+      });
+
+      const [notificationResponse, confirmationResponse] = await Promise.all([
+        notificationPromise,
+        confirmationPromise
+      ]);
+
+      provider = "brevo";
+      notificationSent = notificationResponse.ok;
+      confirmationSent = confirmationResponse.ok;
+
+      if (!notificationResponse.ok) {
+        console.error("Brevo notification email error:", notificationResponse.status, await notificationResponse.text());
+      }
+      if (!confirmationResponse.ok) {
+        console.error("Brevo confirmation email error:", confirmationResponse.status, await confirmationResponse.text());
+      }
+    }
+
+    if (!brevoApiKey && resendApiKey) {
       const notificationPromise = fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -202,7 +252,9 @@ contact@protechweb.ca
         success: true,
         message: "Merci pour votre message, nous vous répondrons dans les 24 à 48 heures.",
         submissionId: submissionId.substring(0, 8),
-        confirmationSent: !!resendApiKey
+        confirmationSent,
+        notificationSent,
+        provider
       }),
       {
         status: 200,

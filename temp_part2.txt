@@ -1,4 +1,4 @@
-# Email Configuration for Contact Form
+﻿# Email Configuration for Contact Form
 
 ## Current Status
 
@@ -8,29 +8,13 @@ The contact form is fully functional and saves all submissions to the Supabase d
 
 The edge function `send-contact-email` uses [Resend](https://resend.com) to send emails. The function checks for a `RESEND_API_KEY` environment variable. If this key is not set, the function will:
 
-1. ✅ Save the form submission to the database
-2. ✅ Return a success message to the user
-3. ❌ Skip sending email notifications (both to you and confirmation to the user)
+1. âœ… Save the form submission to the database
+2. âœ… Return a success message to the user
+3. âŒ Skip sending email notifications (both to you and confirmation to the user)
 
 ## How to Enable Email Notifications
 
-### Option A: Use Brevo (recommended free tier)
-
-1. Create an account at https://www.brevo.com
-2. Verify your domain `protechweb.ca` (SPF/DKIM; DMARC recommended)
-3. Create an API key in Brevo Dashboard
-4. Add secret in Supabase → Project Settings → Edge Functions → Secrets:
-   - Name: `BREVO_API_KEY`
-   - Value: your Brevo API key
-5. Sender address: `noreply@protechweb.ca` (must be allowed by your verified domain)
-
-The edge function prefers Brevo when `BREVO_API_KEY` is set and falls back to Resend otherwise.
-
-### Option B: Use Resend
-
-If you prefer to keep Resend or as a fallback:
-
-#### Step 1: Get a Resend API Key
+### Step 1: Get a Resend API Key
 
 1. Go to [https://resend.com](https://resend.com) and create a free account
 2. Verify your domain (protechweb.ca) or use their testing domain for development

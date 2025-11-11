@@ -1,0 +1,13 @@
+﻿return new Response(null, {
+      status: 200,
+      headers: corsHeaders,
+    });
+  }
+
+  try {
+    const formData: ContactFormData = await req.json();
+    const { name, email, phone, subject, message, inquiryType } = formData;
+
+    if (!name || !email || !subject || !message) {
+      return new Response(
+        JSON.stringify({ error: "Tous les champs obligatoires doivent Ãªtre rempl
