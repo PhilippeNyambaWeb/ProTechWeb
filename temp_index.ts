@@ -144,65 +144,13 @@ Saint-Laurent, QC, H4L 3R3
 contact@protechweb.ca
     `;
 
-    const smtpRelayUrl = Deno.env.get("SMTP_RELAY_URL");
-    const smtpRelayKey = Deno.env.get("SMTP_RELAY_KEY");
     const brevoApiKey = Deno.env.get("BREVO_API_KEY");
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    let provider: "smtp-relay" | "brevo" | "resend" | "none" = "none";
+    let provider: "brevo" | "resend" | "none" = "none";
     let notificationSent = false;
     let confirmationSent = false;
 
-    // Try SMTP relay first if configured (Hostinger SMTP via HTTP relay)
-    if (smtpRelayUrl && smtpRelayKey) {
-      provider = "smtp-relay" as any;
-
-      const relayHeaders = {
-        "Content-Type": "application/json",
-        "X-API-Key": smtpRelayKey,
-      } as Record<string, string>;
-
-      const notificationPromise = fetch(smtpRelayUrl, {
-        method: "POST",
-        headers: relayHeaders,
-        body: JSON.stringify({
-          fromName: "ProTechWeb",
-          fromEmail: "noreply@protechweb.ca",
-          to: ["contact@protechweb.ca"],
-          subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
-          text: notificationEmailBody,
-          replyTo: email,
-        }),
-      });
-
-      const confirmationPromise = fetch(smtpRelayUrl, {
-        method: "POST",
-        headers: relayHeaders,
-        body: JSON.stringify({
-          fromName: "ProTechWeb",
-          fromEmail: "noreply@protechweb.ca",
-          to: [email],
-          subject: "Confirmation de réception - ProTechWeb",
-          text: confirmationEmailBody,
-        }),
-      });
-
-      const [notificationResponse, confirmationResponse] = await Promise.all([
-        notificationPromise,
-        confirmationPromise,
-      ]);
-
-      notificationSent = notificationResponse.ok;
-      confirmationSent = confirmationResponse.ok;
-
-      if (!notificationResponse.ok) {
-        console.error("SMTP relay notification error:", notificationResponse.status, await notificationResponse.text());
-      }
-      if (!confirmationResponse.ok) {
-        console.error("SMTP relay confirmation error:", confirmationResponse.status, await confirmationResponse.text());
-      }
-    }
-
-    if (!(notificationSent && confirmationSent) && brevoApiKey) {
+    if (brevoApiKey) {
       const brevoHeaders = {
         "Content-Type": "application/json",
         "api-key": brevoApiKey,
@@ -248,7 +196,7 @@ contact@protechweb.ca
       }
     }
 
-    if (!(notificationSent && confirmationSent) && resendApiKey) {
+    if (!brevoApiKey && resendApiKey) {
       const notificationPromise = fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {

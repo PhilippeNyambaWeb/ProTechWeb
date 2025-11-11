@@ -72,7 +72,7 @@ If you want to test the contact form without setting up Resend:
 2. You can view submissions in Supabase Dashboard:
    - Go to **Table Editor**
    - Select `contact_submissions` table
-   - View all form submissions
+  - View all form submissions
 
 ## Email Features
 
@@ -122,3 +122,24 @@ Lines 150-190 contain the Resend API integration.
 ## Questions?
 
 For more information about Resend, visit: [https://resend.com/docs](https://resend.com/docs)
+
+## Option C: Hostinger SMTP Relay (use your mailboxes)
+
+If you want all outbound messages to be sent through Hostinger so they appear in your mailbox:
+
+- Deploy the relay in `smtp-relay/` to a small server or platform:
+  - Create `.env` from `.env.example` with your Hostinger SMTP credentials.
+  - Start the server: `npm install && npm start` inside `smtp-relay/`.
+- In Supabase → Project Settings → Edge Functions → Secrets, add:
+  - `SMTP_RELAY_URL` = `https://your-relay.example.com/send`
+  - `SMTP_RELAY_KEY` = the same secret you set in the relay `.env`
+
+Provider order in the edge function:
+- Uses `SMTP_RELAY_URL` + `SMTP_RELAY_KEY` first (Hostinger SMTP via relay)
+- Falls back to `BREVO_API_KEY` if set
+- Falls back to `RESEND_API_KEY` if set
+
+Deliverability and DNS:
+- Keep Hostinger MX records for receiving.
+- If you also use Brevo/Resend as fallback, keep their SPF/DKIM and DMARC records.
+- For Hostinger SMTP, SPF should include Hostinger; check your DNS panel.
