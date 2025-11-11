@@ -161,7 +161,12 @@ contact@protechweb.ca
         "X-API-Key": smtpRelayKey,
       } as Record<string, string>;
 
-      const notificationPromise = fetch(smtpRelayUrl, {
+      // Allow SMTP_RELAY_URL to be either the base origin or the full /send endpoint
+      const relayEndpoint = smtpRelayUrl.endsWith('/send')
+        ? smtpRelayUrl
+        : `${smtpRelayUrl.replace(/\/+$/, '')}/send`;
+
+      const notificationPromise = fetch(relayEndpoint, {
         method: "POST",
         headers: relayHeaders,
         body: JSON.stringify({
@@ -174,7 +179,7 @@ contact@protechweb.ca
         }),
       });
 
-      const confirmationPromise = fetch(smtpRelayUrl, {
+      const confirmationPromise = fetch(relayEndpoint, {
         method: "POST",
         headers: relayHeaders,
         body: JSON.stringify({

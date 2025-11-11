@@ -128,10 +128,11 @@ For more information about Resend, visit: [https://resend.com/docs](https://rese
 If you want all outbound messages to be sent through Hostinger so they appear in your mailbox:
 
 - Deploy the relay in `smtp-relay/` to a small server or platform:
+  - Serve it behind HTTPS at `https://api.protechweb.ca/` (recommended via Nginx/Traefik).
   - Create `.env` from `.env.example` with your Hostinger SMTP credentials.
   - Start the server: `npm install && npm start` inside `smtp-relay/`.
 - In Supabase → Project Settings → Edge Functions → Secrets, add:
-  - `SMTP_RELAY_URL` = `https://your-relay.example.com/send`
+  - `SMTP_RELAY_URL` = `https://api.protechweb.ca/send` (base URL also accepted; the function appends `/send` if missing)
   - `SMTP_RELAY_KEY` = the same secret you set in the relay `.env`
 
 Provider order in the edge function:

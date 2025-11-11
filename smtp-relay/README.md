@@ -7,6 +7,7 @@ Overview
 
 Deploy Steps
 - Requirements: Node 18+, an environment where outbound SMTP (port 587) is allowed.
+- Recommended: run behind HTTPS at your domain, e.g. `https://api.protechweb.ca/`.
 - Clone this folder to your server or deploy to a service (Render, Fly.io, Railway, a VPS, etc.).
 - Create `.env` from `.env.example` and fill values.
 - Install and run:
@@ -27,8 +28,8 @@ Environment Variables
 - RELAY_KEY: shared secret for authenticating requests from your Edge Function
 - PORT: HTTP port (default 8080)
 
-HTTP API
-- POST /send
+HTTP API (HTTPS in production)
+- POST https://api.protechweb.ca/send
   - Headers: `Content-Type: application/json`, `X-API-Key: <RELAY_KEY>`
   - Body JSON:
     - fromEmail (optional; defaults to FROM_EMAIL)
@@ -41,7 +42,7 @@ HTTP API
 
 Example request
 ```
-POST /send
+POST https://api.protechweb.ca/send
 X-API-Key: <RELAY_KEY>
 {
   "fromName": "ProTechWeb",
@@ -57,3 +58,7 @@ Notes
 - Hostinger typically stores SMTP-sent emails in the Sent folder. If you also want a guaranteed copy, you can include a BCC to your own mailbox.
 - Keep RELAY_KEY secret. Only your Edge Function should know it.
 
+Reverse proxy/HTTPS
+- Place this Node app behind your HTTPS terminator (e.g. Nginx/Traefik) serving `https://api.protechweb.ca/`.
+- Forward `/*` or at minimum `/send` and `/health` to the Node process on the configured `PORT` (default 8080).
+- The Supabase edge function calls the relay server-to-server over HTTPS; CORS is not required.
