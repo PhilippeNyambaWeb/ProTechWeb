@@ -3,3 +3,8 @@ node_modules/
 /dist/
 /.vs/
 /.vscode/
+\n+# Local temporary junk
+/temp_*.txt
+/temp_*.ts
+/tmp_*
+/TEST.txt
