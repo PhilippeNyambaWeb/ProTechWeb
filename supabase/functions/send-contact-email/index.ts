@@ -1,4 +1,4 @@
-﻿import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -16,27 +16,30 @@ interface ContactFormData {
   inquiryType?: string;
 }
 
-function determinePriority(subject: string, message: string): string {
-  const urgentKeywords = ['urgent', 'asap', 'immédiat', 'critique', 'problème grave'];
-  const highKeywords = ['important', 'rapidement', 'prioritaire', 'bug', 'erreur'];
-  
-  const combinedText = `${subject} ${message}`.toLowerCase();
-  
-  if (urgentKeywords.some(keyword => combinedText.includes(keyword))) {
-    return 'urgent';
-  }
-  if (highKeywords.some(keyword => combinedText.includes(keyword))) {
-    return 'high';
-  }
-  return 'medium';
+function determinePriority(subject: string, message: string): "urgent" | "high" | "medium" {
+  const urgentKeywords = ["urgent", "asap", "immediat", "critique", "probleme grave"];
+  const highKeywords = ["important", "rapidement", "prioritaire", "bug", "erreur"];
+  const combined = `${subject} ${message}`.toLowerCase();
+  if (urgentKeywords.some(k => combined.includes(k))) return "urgent";
+  if (highKeywords.some(k => combined.includes(k))) return "high";
+  return "medium";
+}
+
+// ASCII-safe fallback for plain-text and subjects when some relays mis-handle UTF‑8
+function asciiSafe(input: string): string {
+  if (!input) return "";
+  return input
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/\u00A0/g, " ");
 }
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(null, { status: 200, headers: corsHeaders });
   }
 
   try {
@@ -45,14 +48,8 @@ Deno.serve(async (req: Request) => {
 
     if (!name || !email || !subject || !message) {
       return new Response(
-        JSON.stringify({ error: "Tous les champs obligatoires doivent être remplis" }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
+        JSON.stringify({ error: "Tous les champs obligatoires doivent etre remplis" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -63,7 +60,7 @@ Deno.serve(async (req: Request) => {
     const priority = determinePriority(subject, message);
 
     const { data: submission, error: dbError } = await supabase
-      .from('contact_submissions')
+      .from("contact_submissions")
       .insert({
         name,
         email,
@@ -71,134 +68,161 @@ Deno.serve(async (req: Request) => {
         subject: inquiryType ? `[${inquiryType}] ${subject}` : subject,
         message,
         priority,
-        status: 'new'
+        status: "new",
       })
       .select()
       .single();
 
-    if (dbError) {
-      console.error("Database error:", dbError);
-    }
+    if (dbError) console.error("Database error:", dbError);
 
-    const submissionId = submission?.id || 'N/A';
+    const submissionId = submission?.id || "N/A";
+    const submittedAt = new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" });
 
-    const notificationEmailBody = `
-Nouveau message de contact depuis ProTechWeb
+    // Build ASCII-safe versions for text/plain
+    const nameAscii = asciiSafe(name);
+    const subjectAscii = asciiSafe("Confirmation de reception - ProTechWeb");
+    const inquiryAscii = asciiSafe(inquiryType || "");
+    const userSubjectAscii = asciiSafe(subject);
+    const messageAscii = asciiSafe(message);
+    const priorityAscii = asciiSafe(priority.toUpperCase());
+
+    const notificationEmailText = `Nouveau message de contact depuis ProTechWeb
 
 ----------------------------------------
 REF: ${submissionId}
-PRIORITE: ${priority.toUpperCase()}
+PRIORITE: ${priorityAscii}
 ----------------------------------------
 
-Nom: ${name}
+Nom: ${nameAscii}
 Email: ${email}
-Téléphone: ${phone || "Non fourni"}
-${inquiryType ? ``Type de demande: ${inquiryType}`` : ''}
-Sujet: ${subject}
+Telephone: ${phone || "Non fourni"}
+${inquiryType ? `Type de demande: ${inquiryAscii}` : ""}
+Sujet: ${userSubjectAscii}
 
 ----------------------------------------
 
 Message:
-${message}
+${messageAscii}
 
 ----------------------------------------
 
-Date: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
+Date: ${submittedAt}
 
-Merci de répondre à ce message dans les 24–48 heures.
-`;
+Merci de repondre a ce message dans les 24-48 heures.`;
 
-const confirmationEmailBody = `
-Bonjour ${name},
+    // Branded confirmation email (HTML + ASCII text fallback)
+    const confirmationEmailSubject = "Confirmation de r\u00E9ception \u2013 ProTechWeb";
 
-Nous avons bien reçu votre message et vous remercions de nous avoir contactés.
+    const confirmationEmailText = `Bonjour ${nameAscii},
+
+Nous avons bien recu votre message et vous remercions de nous avoir contactes.
 
 ----------------------------------------
 VOTRE DEMANDE
 ----------------------------------------
 
-Numéro de référence: ${submissionId}
-Sujet: ${subject}
-Date de soumission: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
+Numero de reference: ${submissionId}
+Sujet: ${userSubjectAscii}
+Date de soumission: ${submittedAt}
+${inquiryType ? `Type de demande: ${inquiryAscii}` : ""}
 
 ----------------------------------------
-RÉSUMÉ DE VOTRE MESSAGE
+RESUME DE VOTRE MESSAGE
 ----------------------------------------
 
-${message}
+${messageAscii}
 
-----------------------------------------
-
-Notre équipe examinera votre demande et vous contactera dans les 24 à 48 heures.
-
-Si votre demande est urgente, n'hésitez pas à nous appeler directement au +1 (514) 994-4689.
+Notre equipe vous contactera dans les 24 a 48 heures.
+Si votre demande est urgente, appelez-nous au +1 (514) 994-4689.
 
 Cordialement,
-L'équipe ProTechWeb
+L'equipe ProTechWeb
 
 ----------------------------------------
 ProTechWeb - Professionnels des Technologies du Web
 2-545 Rue Saint-Germain
 Saint-Laurent, QC, H4L 3R3
 +1 (514) 994-4689
-contact@protechweb.ca
-`;const confirmationEmailBody = `
-Bonjour ${name},
+contact@protechweb.ca`;
 
-Nous avons bien reçu votre message et vous remercions de nous avoir contactés.
-
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-VOTRE DEMANDE
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-
-Numéro de référence: ${submissionId}
-Sujet: ${subject}
-Date de soumission: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
-
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-RÉSUMÉ DE VOTRE MESSAGE
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-
-${message}
-
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-
-Notre équipe examinera votre demande et vous contactera dans les 24 à 48 heures.
-
-Si votre demande est urgente, n'hésitez pas à nous appeler directement au +1 (514) 994-4689.
-
-Cordialement,
-L'équipe ProTechWeb
-
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-ProTechWeb - Professionnels des Technologies du Web
-2-545 Rue Saint-Germain
-Saint-Laurent, QC, H4L 3R3
-+1 (514) 994-4689
-contact@protechweb.ca
-    `;
+    const safeMessageHtml = (message || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const confirmationEmailHtml = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${confirmationEmailSubject}</title>
+  <style>
+    body { margin:0; padding:0; background:#f8fafc; color:#212529; font-family: Arial, Helvetica, sans-serif; }
+    .wrapper { width:100%; background:#f0f4f8; padding:20px 0; }
+    .container { max-width:600px; margin:0 auto; background:#ffffff; border-radius:8px; overflow:hidden; }
+    .header { background:#2372b6; padding:16px; display:flex; align-items:center; }
+    .header .logo { height:48px; display:block; }
+    .header .tagline { color:#e9f3fb; font-size:13px; margin-left:12px; font-style:italic; }
+    .content { padding:24px; }
+    h2 { margin:0 0 12px; color:#2372b6; font-size:22px; }
+    h3 { color:#2372b6; font-size:16px; margin:20px 0 8px; }
+    ul { padding-left:18px; }
+    .cta { display:inline-block; margin-top:12px; background:#2372b6; color:#fff !important; padding:10px 16px; text-decoration:none; border-radius:4px; font-weight:600; }
+    .note { font-size:14px; color:#0f4d82; margin-top:12px; }
+    .footer { background:#ededed; padding:16px; font-size:13px; color:#333333; }
+    a { color:#2372b6; }
+    @media (max-width:620px){ .content { padding:16px; } }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <img class="logo" src="https://protechweb.ca/assets/Logo_ProtechWeb.png" alt="Logo ProTechWeb" />
+        <span class="tagline">Professionnels des Technologies du Web</span>
+      </div>
+      <div class="content">
+        <h2>Confirmation de r&eacute;ception</h2>
+        <p>Bonjour ${name},</p>
+        <p>Nous avons bien re&ccedil;u votre message concernant <strong>${subject}</strong>. Merci de nous avoir contact&eacute;s&nbsp;!</p>
+        <h3>D&eacute;tails de votre demande</h3>
+        <ul>
+          <li><strong>Num&eacute;ro de r&eacute;f&eacute;rence:</strong> ${submissionId}</li>
+          <li><strong>Date de soumission:</strong> ${submittedAt}</li>
+          ${inquiryType ? `<li><strong>Type de demande:</strong> ${inquiryType}</li>` : ''}
+          <li><strong>Sujet:</strong> ${subject}</li>
+        </ul>
+        <h3>R&eacute;sum&eacute; du message</h3>
+        <p>${safeMessageHtml}</p>
+        <p>Notre &eacute;quipe vous contactera dans les 24 &agrave; 48 heures.</p>
+        <p>
+          Pour toute question urgente, cliquez ici&nbsp;:
+          <a href="tel:+15149944689" class="cta">Appeler ProTechWeb</a>
+        </p>
+        <p class="note">Si vous n'&ecirc;tes pas &agrave; l'origine de cette demande, veuillez nous en informer.</p>
+      </div>
+      <div class="footer">
+        ProTechWeb &ndash; Professionnels des Technologies du Web<br/>
+        2-545 Rue Saint-Germain, Saint-Laurent QC, H4L 3R3<br/>
+        <a href="tel:+15149944689">+1 (514) 994-4689</a> &ndash; <a href="mailto:contact@protechweb.ca">contact@protechweb.ca</a>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>`;
 
     const smtpRelayUrl = Deno.env.get("SMTP_RELAY_URL");
     const smtpRelayKey = Deno.env.get("SMTP_RELAY_KEY");
-    const brevoApiKey = Deno.env.get("BREVO_API_KEY");
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    let provider: "smtp-relay" | "brevo" | "resend" | "none" = "none";
+    let provider: "smtp-relay" | "none" = "none";
     let notificationSent = false;
     let confirmationSent = false;
 
-    // Try SMTP relay first if configured (Hostinger SMTP via HTTP relay)
     if (smtpRelayUrl && smtpRelayKey) {
       provider = "smtp-relay" as any;
-
       const relayHeaders = {
         "Content-Type": "application/json",
         "X-API-Key": smtpRelayKey,
       } as Record<string, string>;
 
-      // Allow SMTP_RELAY_URL to be either the base origin or the full /send endpoint
-      const relayEndpoint = smtpRelayUrl.endsWith('/send')
+      const relayEndpoint = smtpRelayUrl.endsWith("/send")
         ? smtpRelayUrl
-        : `${smtpRelayUrl.replace(/\/+$/, '')}/send`;
+        : `${smtpRelayUrl.replace(/\/+$/, "")}/send`;
 
       const notificationPromise = fetch(relayEndpoint, {
         method: "POST",
@@ -208,7 +232,7 @@ contact@protechweb.ca
           fromEmail: "noreply@protechweb.ca",
           to: ["contact@protechweb.ca"],
           subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
-          text: notificationEmailBody,
+          text: notificationEmailText,
           replyTo: email,
         }),
       });
@@ -220,8 +244,11 @@ contact@protechweb.ca
           fromName: "ProTechWeb",
           fromEmail: "noreply@protechweb.ca",
           to: [email],
-          subject: "Confirmation de réception - ProTechWeb",
-          text: confirmationEmailBody,
+          subject: confirmationEmailSubject,
+          html: confirmationEmailHtml,
+          text: confirmationEmailText,
+          headers: { "Content-Language": "fr-CA" },
+          priority: priority === "urgent" ? "high" : "normal",
         }),
       });
 
@@ -241,142 +268,23 @@ contact@protechweb.ca
       }
     }
 
-    if (!(notificationSent && confirmationSent) && brevoApiKey) {
-      const brevoHeaders = {
-        "Content-Type": "application/json",
-        "api-key": brevoApiKey,
-      } as Record<string, string>;
-
-      const notificationPromise = fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: brevoHeaders,
-        body: JSON.stringify({
-          sender: { name: "ProTechWeb", email: "noreply@protechweb.ca" },
-          to: [{ email: "contact@protechweb.ca" }],
-          replyTo: { email },
-          subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
-          textContent: notificationEmailBody,
-        }),
-      });
-
-      const confirmationPromise = fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: brevoHeaders,
-        body: JSON.stringify({
-          sender: { name: "ProTechWeb", email: "noreply@protechweb.ca" },
-          to: [{ email }],
-          subject: "Confirmation de réception - ProTechWeb",
-          textContent: confirmationEmailBody,
-        }),
-      });
-
-      const [notificationResponse, confirmationResponse] = await Promise.all([
-        notificationPromise,
-        confirmationPromise
-      ]);
-
-      provider = "brevo";
-      notificationSent = notificationResponse.ok;
-      confirmationSent = confirmationResponse.ok;
-
-      if (!notificationResponse.ok) {
-        console.error("Brevo notification email error:", notificationResponse.status, await notificationResponse.text());
-      }
-      if (!confirmationResponse.ok) {
-        console.error("Brevo confirmation email error:", confirmationResponse.status, await confirmationResponse.text());
-      }
-    }
-
-    if (!(notificationSent && confirmationSent) && resendApiKey) {
-      const notificationPromise = fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: "ProTechWeb <onboarding@resend.dev>",
-          to: ["contact@protechweb.ca"],
-          reply_to: email,
-          subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
-          text: notificationEmailBody,
-        }),
-      });
-
-      const confirmationPromise = fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: "ProTechWeb <onboarding@resend.dev>",
-          to: [email],
-          subject: "Confirmation de réception - ProTechWeb",
-          text: confirmationEmailBody,
-        }),
-      });
-
-      const [notificationResponse, confirmationResponse] = await Promise.all([
-        notificationPromise,
-        confirmationPromise
-      ]);
-
-      const notificationResult = await notificationResponse.json();
-      const confirmationResult = await confirmationResponse.json();
-
-      if (!notificationResponse.ok) {
-        console.error("Notification email error:", notificationResponse.status, notificationResult);
-      } else {
-        console.log("Notification email sent successfully:", notificationResult);
-      }
-
-      if (!confirmationResponse.ok) {
-        console.error("Confirmation email error:", confirmationResponse.status, confirmationResult);
-      } else {
-        console.log("Confirmation email sent successfully:", confirmationResult);
-      }
-    }
-
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        message: "Merci pour votre message, nous vous répondrons dans les 24 à 48 heures.",
+        message: "Merci pour votre message, nous vous repondrons dans les 24 a 48 heures.",
         submissionId: submissionId.substring(0, 8),
         confirmationSent,
         notificationSent,
-        provider
+        provider,
       }),
-      {
-        status: 200,
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
-      }
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error processing contact form:", error);
-    
     return new Response(
-      JSON.stringify({ 
-        error: "Une erreur est survenue, merci de réessayer.",
-        details: error.message 
-      }),
-      {
-        status: 500,
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
-      }
+      JSON.stringify({ error: "Une erreur est survenue, merci de reessayer.", details: error?.message }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
-
-
-
-
-
-
 
