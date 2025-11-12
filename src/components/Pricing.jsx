@@ -11,6 +11,184 @@ const Pricing = () => {
   const { language } = useLanguage();
   const t = useTranslations(language);
 
+  // Pricing overrides (source-of-truth for current specs)
+  const overrides = {
+    fr: {
+      starterMini: {
+        setupPrice: '$499',
+        monthlyPrice: '$45',
+        priceNote: 'mise en place',
+        monthlyNote: '/ mois',
+        description: 'Pour freelances, solopreneurs et micro-entreprises.',
+        setupDetails: 'Configuration du site, SSL et securisation de base',
+        monthlyDetails: 'Hebergement gere, mises a jour mineures, support email',
+        features: [
+          'Pages: 1 a 3',
+          'Design moderne et responsive',
+          '1 boite mail pro (1ere annee gratuite, 36$/an apres)',
+          'Certificat SSL et durcissement securite',
+          'Formulaire de contact / capture de leads',
+          'SEO on-page de base (title/meta, sitemap)',
+          'Modeles conformes accessibilite',
+          'Images libres ou couleurs simples',
+          'Hebergement gere 1 an',
+          'Mises a jour mensuelles mineures et support email',
+        ],
+      },
+      starterPlus: {
+        setupPrice: '$999',
+        monthlyPrice: '$65',
+        priceNote: 'mise en place',
+        monthlyNote: '/ mois',
+        description: 'Pour PME en croissance avec plus de pages et d’options.',
+        setupDetails: 'Pages supplementaires et personnalisation de marque',
+        monthlyDetails: 'Hebergement gere, sauvegardes et support prioritaire',
+        features: [
+          'Pages: 4 a 6',
+          'Tout de Mini, plus :',
+          '2 boites mail pro (1ere annee gratuite, 36$/an apres)',
+          'Modeles de pages et sections additionnels',
+          'Sections A propos, Services, Equipe personnalisables',
+          'Personnalisation de marque (logo, palette de couleurs)',
+          'Blog / module d’actualites',
+          'Google Analytics et suivi',
+          'Sauvegarde sur site et options de rollback',
+          'Reponse prioritaire pour les tickets',
+        ],
+      },
+      professional: {
+        setupPrice: '$2,499',
+        monthlyPrice: '$150',
+        priceNote: 'mise en place',
+        monthlyNote: '/ mois',
+        description: 'Pour entreprises etablies et organisations.',
+        popular: 'Le plus populaire',
+        features: [
+          'Pages: jusqu’a 12',
+          'Tout de Plus, plus :',
+          '3 boites mail pro (1ere annee gratuite, 36$/an apres)',
+          'Design avance avec animations/micro-interactions',
+          'CMS pour mises a jour faciles',
+          'Formulaires reutilisables et sections dynamiques (cas, equipe, avis)',
+          'SEO on-site complet (schema, images, GSC)',
+          'Integrations tierces (calendrier, CRM, reservation, reseaux)',
+          'Visuels premium, graphisme et iconographie',
+          'Tableau de bord analytics avance',
+          '3 mois de mises a jour/maintenance inclus',
+        ],
+      },
+      enterprise: {
+        title: 'Premium / Enterprise',
+        setupPrice: '$5,999+',
+        monthlyPrice: '$350+',
+        priceNote: 'mise en place',
+        monthlyNote: '/ mois',
+        description: 'Pour entreprises, startups, agences ou e-commerce.',
+        features: [
+          'Pages: illimitees',
+          'Tout de Pro, plus :',
+          '5 boites mail pro (1ere annee gratuite, 36$/an apres)',
+          'UX/UI complete (parcours, wireframes, branding avance)',
+          'E‑commerce ou portail/membres si besoin',
+          'Integrations backend/API sur mesure',
+          'Multilingue (sur demande)',
+          'Serveur dedie ou cloud securise et scalable',
+          'Strategie de contenu, SEO premium et marketing de lancement',
+          'Optimisation performance (CDN, cache, images/videos)',
+          'Reporting mensuel, revues analytics, support 24/7',
+          '6 mois de support et maintenance continus',
+        ],
+      },
+    },
+    en: {
+      starterMini: {
+        setupPrice: '$499',
+        monthlyPrice: '$45',
+        priceNote: 'setup',
+        monthlyNote: '/ month',
+        description: 'For freelancers, solopreneurs, and microbusinesses.',
+        setupDetails: 'Site setup with SSL and basic hardening',
+        monthlyDetails: 'Managed hosting, minor updates, email support',
+        features: [
+          'Pages: 1–3',
+          'Modern, responsive design',
+          '1 professional mailbox (1st year free, $36/year after)',
+          'SSL certificate & security hardening',
+          'Contact or lead capture form',
+          'Basic on-page SEO (title/meta, sitemap)',
+          'Accessibility-compliant templates',
+          'Stock images or simple brand colors',
+          '1 year managed hosting',
+          'Monthly minor updates & email support',
+        ],
+      },
+      starterPlus: {
+        setupPrice: '$999',
+        monthlyPrice: '$65',
+        priceNote: 'setup',
+        monthlyNote: '/ month',
+        description: 'For small to mid-sized growing businesses.',
+        setupDetails: 'Extra pages and brand customization',
+        monthlyDetails: 'Managed hosting with backups and priority support',
+        features: [
+          'Pages: 4–6',
+          'Everything in Mini, plus:',
+          '2 professional mailboxes (1st year free, $36/year after)',
+          'Additional page and section templates',
+          'Customizable About, Services, Team sections',
+          'Enhanced brand customization (logo placement, color palette)',
+          'Blog or news module integration',
+          'Google Analytics & tracking setup',
+          'On-site backup & rollback options',
+          'Prioritized response for support tickets',
+        ],
+      },
+      professional: {
+        setupPrice: '$2,499',
+        monthlyPrice: '$150',
+        priceNote: 'setup',
+        monthlyNote: '/ month',
+        description: 'For established businesses and organizations.',
+        popular: 'Most Popular',
+        features: [
+          'Pages: up to 12',
+          'Everything in Plus, plus:',
+          '3 professional mailboxes (1st year free, $36/year after)',
+          'Advanced custom design with animations/micro-interactions',
+          'Content Management System (CMS) for easy updates',
+          'Custom reusable forms, dynamic sections (case studies, team, testimonials)',
+          'Comprehensive on-site SEO (schema, image optimization, GSC integration)',
+          'Third-party integrations: calendar, CRM, booking, or social feeds',
+          'Premium image assets, graphic design, or custom iconography',
+          'Advanced analytics dashboard',
+          '3 months major updates/maintenance included',
+        ],
+      },
+      enterprise: {
+        title: 'Premium / Enterprise',
+        setupPrice: '$5,999+',
+        monthlyPrice: '$350+',
+        priceNote: 'setup',
+        monthlyNote: '/ month',
+        description: 'For enterprises, startups, agencies, or e‑commerce.',
+        features: [
+          'Pages: unlimited',
+          'Everything in Pro, plus:',
+          '5 professional mailboxes (1st year free, $36/year after)',
+          'Full custom UX/UI (user flows, wireframes, advanced branding)',
+          'E‑commerce or membership/portal features (if needed)',
+          'Custom backend/API integrations',
+          'Multi-language support (if requested)',
+          'Dedicated server or cloud hosting with advanced security & scalability',
+          'Full content strategy, premium SEO, and digital marketing kickoff',
+          'Performance tuning (CDN, caching, image/video optimization)',
+          'Monthly reporting, analytics reviews, 24/7 emergency support',
+          '6 months ongoing support and maintenance',
+        ],
+      },
+    },
+  };
+
   const handlePlanSelect = (planName, price) => {
     const priceStr = price || planName;
     prefillContactForm({
@@ -32,24 +210,29 @@ const Pricing = () => {
     });
   };
 
+  const o = overrides[language];
   const pricingTiers = [
     {
       ...t.pricing.starterMini,
+      ...(o?.starterMini || {}),
       highlighted: false,
       isStarter: true
     },
     {
       ...t.pricing.starterPlus,
+      ...(o?.starterPlus || {}),
       highlighted: false,
       isStarter: true
     },
     {
       ...t.pricing.professional,
+      ...(o?.professional || {}),
       highlighted: true,
       isStarter: false
     },
     {
       ...t.pricing.enterprise,
+      ...(o?.enterprise || {}),
       highlighted: false,
       isStarter: false
     }
@@ -97,7 +280,7 @@ const Pricing = () => {
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white mb-2">{tier.title}</h3>
 
-                  {tier.isStarter ? (
+                  {tier.setupPrice && tier.monthlyPrice ? (
                     <div className="mb-4 space-y-2">
                       <div className="bg-white/5 p-3 rounded-lg border border-white/10">
                         <div className="flex items-baseline justify-between mb-1">
