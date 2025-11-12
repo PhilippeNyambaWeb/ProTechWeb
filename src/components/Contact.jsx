@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { GlassCard, GlassButton } from '@/components/ui/glass-card';
@@ -100,10 +100,10 @@ const Contact = () => {
         setSubmissionId(data.submissionId || '');
 
         toast({
-          title: "Message envoyé avec succès !",
+          title: "Message envoy\u00E9 avec succ\u00E8s !",
           description: data.confirmationSent
-            ? "Un email de confirmation vous a été envoyé. Nous vous répondrons dans les 24 à 48 heures."
-            : data.message || "Nous vous répondrons dans les 24 à 48 heures.",
+            ? "Un email de confirmation vous a \u00E9t\u00E9 envoy\u00E9. Nous vous r\u00E9pondrons dans les 24 \u00E0 48 heures."
+            : data.message || "Nous vous r\u00E9pondrons dans les 24 \u00E0 48 heures.",
           duration: 8000
         });
 
@@ -123,7 +123,7 @@ const Contact = () => {
       console.error('Error sending contact form:', error);
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue, merci de réessayer ou de nous appeler au +1 (514) 994-4689.",
+        description: "Une erreur est survenue, merci de r\u00E9essayer ou de nous appeler au +1 (514) 994-4689.",
         variant: "destructive",
         duration: 6000
       });
@@ -327,7 +327,7 @@ const Contact = () => {
               {submissionId && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-800">
-                    Votre numéro de référence: <strong>{submissionId}</strong>
+                    {'Votre num\u00E9ro de r\u00E9f\u00E9rence: '}<strong>{submissionId}</strong>
                   </p>
                 </div>
               )}
@@ -345,7 +345,7 @@ const Contact = () => {
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                       className="mr-2"
                     >
-                      ⏳
+                      â³
                     </motion.div>
                     Envoi en cours...
                   </>
@@ -358,7 +358,7 @@ const Contact = () => {
               </GlassButton>
 
               <p className="text-xs text-center text-gray-500">
-                En soumettant ce formulaire, vous acceptez que nous traitions vos données conformément à notre politique de confidentialité.
+                {'En soumettant ce formulaire, vous acceptez que nous traitions vos donn\u00E9es conform\u00E9ment \u00E0 notre politique de confidentialit\u00E9.'}
               </p>
             </form>
           </GlassCard>
@@ -369,3 +369,8 @@ const Contact = () => {
 };
 
 export default Contact;
+
+
+
+
+

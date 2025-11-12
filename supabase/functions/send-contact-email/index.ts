@@ -17,7 +17,7 @@ interface ContactFormData {
 }
 
 function determinePriority(subject: string, message: string): string {
-  const urgentKeywords = ['urgent', 'asap', 'immÃ©diat', 'critique', 'problÃ¨me grave'];
+  const urgentKeywords = ['urgent', 'asap', 'immédiat', 'critique', 'problème grave'];
   const highKeywords = ['important', 'rapidement', 'prioritaire', 'bug', 'erreur'];
   
   const combinedText = `${subject} ${message}`.toLowerCase();
@@ -45,7 +45,7 @@ Deno.serve(async (req: Request) => {
 
     if (!name || !email || !subject || !message) {
       return new Response(
-        JSON.stringify({ error: "Tous les champs obligatoires doivent Ãªtre remplis" }),
+        JSON.stringify({ error: "Tous les champs obligatoires doivent être remplis" }),
         {
           status: 400,
           headers: {
@@ -85,56 +85,90 @@ Deno.serve(async (req: Request) => {
     const notificationEmailBody = `
 Nouveau message de contact depuis ProTechWeb
 
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-RÃ‰FÃ‰RENCE: ${submissionId}
-PRIORITÃ‰: ${priority.toUpperCase()}
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+----------------------------------------
+REF: ${submissionId}
+PRIORITE: ${priority.toUpperCase()}
+----------------------------------------
 
 Nom: ${name}
 Email: ${email}
-TÃ©lÃ©phone: ${phone || "Non fourni"}
-${inquiryType ? `Type de demande: ${inquiryType}` : ''}
+Téléphone: ${phone || "Non fourni"}
+${inquiryType ? ``Type de demande: ${inquiryType}`` : ''}
 Sujet: ${subject}
 
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+----------------------------------------
 
 Message:
 ${message}
 
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+----------------------------------------
 
 Date: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
 
-RÃ©pondre Ã  ce message dans les 24-48 heures.
-    `;
+Merci de répondre à ce message dans les 24–48 heures.
+`;
 
-    const confirmationEmailBody = `
+const confirmationEmailBody = `
 Bonjour ${name},
 
-Nous avons bien reÃ§u votre message et vous remercions de nous avoir contactÃ©s.
+Nous avons bien reçu votre message et vous remercions de nous avoir contactés.
+
+----------------------------------------
+VOTRE DEMANDE
+----------------------------------------
+
+Numéro de référence: ${submissionId}
+Sujet: ${subject}
+Date de soumission: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
+
+----------------------------------------
+RÉSUMÉ DE VOTRE MESSAGE
+----------------------------------------
+
+${message}
+
+----------------------------------------
+
+Notre équipe examinera votre demande et vous contactera dans les 24 à 48 heures.
+
+Si votre demande est urgente, n'hésitez pas à nous appeler directement au +1 (514) 994-4689.
+
+Cordialement,
+L'équipe ProTechWeb
+
+----------------------------------------
+ProTechWeb - Professionnels des Technologies du Web
+2-545 Rue Saint-Germain
+Saint-Laurent, QC, H4L 3R3
++1 (514) 994-4689
+contact@protechweb.ca
+`;const confirmationEmailBody = `
+Bonjour ${name},
+
+Nous avons bien reçu votre message et vous remercions de nous avoir contactés.
 
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 VOTRE DEMANDE
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-NumÃ©ro de rÃ©fÃ©rence: ${submissionId}
+Numéro de référence: ${submissionId}
 Sujet: ${subject}
 Date de soumission: ${new Date().toLocaleString("fr-CA", { timeZone: "America/Toronto" })}
 
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
-RÃ‰SUMÃ‰ DE VOTRE MESSAGE
+RÉSUMÉ DE VOTRE MESSAGE
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 ${message}
 
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-Notre Ã©quipe examinera votre demande et vous contactera dans les 24 Ã  48 heures.
+Notre équipe examinera votre demande et vous contactera dans les 24 à 48 heures.
 
-Si votre demande est urgente, n'hÃ©sitez pas Ã  nous appeler directement au +1 (514) 994-4689.
+Si votre demande est urgente, n'hésitez pas à nous appeler directement au +1 (514) 994-4689.
 
 Cordialement,
-L'Ã©quipe ProTechWeb
+L'équipe ProTechWeb
 
 â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 ProTechWeb - Professionnels des Technologies du Web
@@ -231,7 +265,7 @@ contact@protechweb.ca
         body: JSON.stringify({
           sender: { name: "ProTechWeb", email: "noreply@protechweb.ca" },
           to: [{ email }],
-          subject: "Confirmation de rAcception - ProTechWeb",
+          subject: "Confirmation de réception - ProTechWeb",
           textContent: confirmationEmailBody,
         }),
       });
@@ -264,7 +298,7 @@ contact@protechweb.ca
           from: "ProTechWeb <onboarding@resend.dev>",
           to: ["contact@protechweb.ca"],
           reply_to: email,
-          subject: `[${priority.toUpperCase()}] ${subject} - RÃ©f: ${submissionId.substring(0, 8)}`,
+          subject: `[${priority.toUpperCase()}] ${subject} - Ref: ${submissionId.substring(0, 8)}`,
           text: notificationEmailBody,
         }),
       });
@@ -278,7 +312,7 @@ contact@protechweb.ca
         body: JSON.stringify({
           from: "ProTechWeb <onboarding@resend.dev>",
           to: [email],
-          subject: "Confirmation de rÃ©ception - ProTechWeb",
+          subject: "Confirmation de réception - ProTechWeb",
           text: confirmationEmailBody,
         }),
       });
@@ -307,7 +341,7 @@ contact@protechweb.ca
     return new Response(
       JSON.stringify({ 
         success: true,
-        message: "Merci pour votre message, nous vous rÃ©pondrons dans les 24 Ã  48 heures.",
+        message: "Merci pour votre message, nous vous répondrons dans les 24 à 48 heures.",
         submissionId: submissionId.substring(0, 8),
         confirmationSent,
         notificationSent,
@@ -326,7 +360,7 @@ contact@protechweb.ca
     
     return new Response(
       JSON.stringify({ 
-        error: "Une erreur est survenue, merci de rÃ©essayer.",
+        error: "Une erreur est survenue, merci de réessayer.",
         details: error.message 
       }),
       {
@@ -339,3 +373,10 @@ contact@protechweb.ca
     );
   }
 });
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-export const translations = {
+﻿export const translations = {
   fr: {
     // Header
     nav: {
@@ -247,7 +247,7 @@ export const translations = {
       },
       professional: {
         title: 'Pro',
-        price: '≈ $2299',
+        price: "$2299",
         priceNote: '/ projet',
         description: 'Solution complète pour les entreprises en croissance.',
         popular: 'Le plus populaire',
@@ -266,7 +266,7 @@ export const translations = {
       },
       enterprise: {
         title: 'Premium',
-        price: '≈ $10499',
+        price: "$10499",
         priceNote: '/ projet',
         description: 'Solution entreprise avec fonctionnalités avancées et accompagnement personnalisé.',
         features: [
@@ -619,7 +619,7 @@ export const translations = {
       },
       professional: {
         title: 'Pro',
-        price: '≈ $2299',
+        price: "$2299",
         priceNote: '/ project',
         description: 'Complete solution for growing businesses.',
         popular: 'Most Popular',
@@ -638,7 +638,7 @@ export const translations = {
       },
       enterprise: {
         title: 'Premium',
-        price: '≈ $10499',
+        price: '$10499',
         priceNote: '/ project',
         description: 'Enterprise solution with advanced features and personalized support.',
         features: [
@@ -748,3 +748,28 @@ export const translations = {
 export const useTranslations = (language) => {
   return translations[language] || translations.fr;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

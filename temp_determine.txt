@@ -1,0 +1,3 @@
+﻿function determinePriority(subject: string, message: string): string {
+  const urgentKeywords = ['urgent', 'asap', 'immÃ©diat', 'critique', 'problÃ¨me grave'];
+  const highKeywords = ['important', '

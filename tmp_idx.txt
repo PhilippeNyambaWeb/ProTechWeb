@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>ProTechWeb &ndash; Solutions Web Professionnelles | Montr&eacute;al</title>
-    <meta name="title" content="ProTechWeb &ndash; Solutions Web Professionnelles | Montr&eacute;al" />
-    <meta name="description" content="Cr&eacute;ation de sites web, applications et e-commerce pour entreprises et ind&eacute;pendants. Design moderne, d&eacute;veloppement s&eacute;curis&eacute;, accompagnement personnalis&eacute; &agrave; Montr&eacute;al." />
-    <meta name="keywords" content="web, design, d&eacute;veloppement, e-commerce, Montr&eacute;al, agence web, solutions digitales, Cr&eacute;ation site web, application web, d&eacute;veloppement web, identit&eacute; visuelle, SEO, backend" />
+    <title>ProTechWeb â€“ Solutions Web Professionnelles | MontrÃ©al</title>
+    <meta name="title" content="ProTechWeb â€“ Solutions Web Professionnelles | MontrÃ©al" />
+    <meta name="description" content="CrÃ©ation de sites web, applications et e-commerce pour entreprises et indÃ©pendants. Design moderne, dÃ©veloppement sÃ©curisÃ©, accompagnement personnalisÃ© Ã  MontrÃ©al." />
+    <meta name="keywords" content="web, design, dÃ©veloppement, e-commerce, MontrÃ©al, agence web, solutions digitales, crÃ©ation site web, application web, dÃ©veloppement web, identitÃ© visuelle, SEO, backend" />
     <meta name="author" content="ProTechWeb" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="French" />
@@ -18,8 +18,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://protechweb.ca" />
-    <meta property="og:title" content="ProTechWeb – Solutions Web Professionnelles" />
-    <meta property="og:description" content="Votre partenaire pour la Cr&eacute;ation et le d&eacute;veloppement de sites web et applications modernes &agrave; Montr&eacute;al." />
+    <meta property="og:title" content="ProTechWeb â€“ Solutions Web Professionnelles" />
+    <meta property="og:description" content="Votre partenaire pour la crÃ©ation et le dÃ©veloppement de sites web et applications modernes Ã  MontrÃ©al." />
     <meta property="og:image" content="https://protechweb.ca/assets/Logo_ProtechWeb.png" />
     <meta property="og:locale" content="fr_CA" />
     <meta property="og:site_name" content="ProTechWeb" />
@@ -27,8 +27,8 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://protechweb.ca" />
-    <meta name="twitter:title" content="ProTechWeb &ndash; Solutions Web Professionnelles" />
-    <meta name="twitter:description" content="Agence web experte à Montréal. Création de sites web, applications et e-commerce." />
+    <meta name="twitter:title" content="ProTechWeb â€“ Solutions Web Professionnelles" />
+    <meta name="twitter:description" content="Agence web experte Ã  MontrÃ©al. CrÃ©ation de sites web, applications et e-commerce." />
     <meta name="twitter:image" content="https://protechweb.ca/assets/Logo_ProtechWeb.png" />
 
     <!-- Canonical URL -->
@@ -48,7 +48,7 @@
       "alternateName": "ProTechWeb - Professionnels des Technologies du Web",
       "url": "https://protechweb.ca",
       "logo": "https://protechweb.ca/assets/Logo_ProtechWeb.png",
-      "description": "Agence web experte à Montréal. Création de sites web, applications et e-commerce.",
+      "description": "Agence web spÃ©cialisÃ©e dans la crÃ©ation de sites web, applications et e-commerce Ã  MontrÃ©al",
       "email": "contact@protechweb.ca",
       "telephone": "+1-514-994-4689",
       "contactPoint": {
@@ -79,8 +79,3 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
-
-
-
-
