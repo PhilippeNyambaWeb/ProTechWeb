@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Target, Eye, Award, Users } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-card';
@@ -14,8 +14,8 @@ const Hero = () => {
   const handleStartProject = () => {
     prefillContactForm({
       inquiryType: 'Projet',
-      subject: 'Demande de démarrage de projet',
-      message: 'Je souhaite démarrer un nouveau projet avec ProTechWeb. Voici mes besoins:\n\n'
+      subject: 'Demande de dÃ©marrage de projet',
+      message: 'Je souhaite dÃ©marrer un nouveau projet avec ProTechWeb. Voici mes besoins:\n\n'
     });
   };
 
@@ -38,7 +38,7 @@ const Hero = () => {
             src="/assets/banner-video.mp4"
             type="video/mp4"
           />
-          Votre navigateur ne supporte pas la vidéo.
+          Votre navigateur ne supporte pas la vidÃ©o.
         </video>
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70 z-10" />
@@ -128,3 +128,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
