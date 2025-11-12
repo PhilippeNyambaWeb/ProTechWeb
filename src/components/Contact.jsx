@@ -194,16 +194,16 @@ const Contact = () => {
                 <div>
                   <h3 className="font-bold text-white mb-1">Adresse</h3>
                   <p className="text-gray-200">2-545 Rue Saint-Germain</p>
-                  <p className="text-gray-200">Saint-Lauren, QC, H4L 3R3</p>
+                  <p className="text-gray-200">Saint-Laurent, QC, H4L 3R3</p>
                 </div>
               </div>
 
-              <div className="backdrop-blur-sm bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8 border border-white/30">
+              {/* <div className="backdrop-blur-sm bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8 border border-white/30">
                 <h3 className="font-bold text-white mb-3">{t.contact.info.hours}</h3>
                 <div className="space-y-2 text-gray-200">
                   <p>{t.contact.info.hoursValue}</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </GlassCard>
 

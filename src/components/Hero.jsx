@@ -35,7 +35,7 @@ const Hero = () => {
           style={{ objectPosition: 'center center' }}
         >
           <source
-            src="/assets/banner-video.jpg"
+            src="/assets/banner-video.mp4"
             type="video/mp4"
           />
           Votre navigateur ne supporte pas la vidéo.
