@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, Send } from 'lucide-react';
 import { GlassCard, GlassButton } from '@/components/ui/glass-card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -184,17 +184,6 @@ const Contact = () => {
                 <div>
                   <h3 className="font-bold text-white mb-1">{t.contact.info.phone}</h3>
                   <p className="text-gray-200">+1 (514) 994-4689</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-primary/10 p-3 rounded-full">
-                  <MapPin className="text-secondary" size={24} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white mb-1">Adresse</h3>
-                  <p className="text-gray-200">2-545 Rue Saint-Germain</p>
-                  <p className="text-gray-200">Saint-Laurent, QC, H4L 3R3</p>
                 </div>
               </div>
 

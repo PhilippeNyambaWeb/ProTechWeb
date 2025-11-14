@@ -140,8 +140,6 @@ L'equipe ProTechWeb
 
 ----------------------------------------
 ProTechWeb - Professionnels des Technologies du Web
-2-545 Rue Saint-Germain
-Saint-Laurent, QC, H4L 3R3
 +1 (514) 994-4689
 contact@protechweb.ca`;
 
@@ -199,7 +197,6 @@ contact@protechweb.ca`;
       </div>
       <div class="footer">
         ProTechWeb &ndash; Professionnels des Technologies du Web<br/>
-        2-545 Rue Saint-Germain, Saint-Laurent QC, H4L 3R3<br/>
         <a href="tel:+15149944689">+1 (514) 994-4689</a> &ndash; <a href="mailto:contact@protechweb.ca">contact@protechweb.ca</a>
       </div>
     </div>
