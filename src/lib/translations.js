@@ -7,6 +7,18 @@ export const translations = {
       pricing: 'Tarifs',
       contact: 'Contact',
     },
+    seo: {
+      title: 'ProTechWeb | Professionnels des Technologies du Web | Cr\\u00e9ation de sites et applications modernes',
+      description:
+        'ProTechWeb, Professionnels des Technologies du Web, con\\u00e7oit des sites vitrines, e-commerce et applications web sur mesure optimis\\u00e9s pour le SEO et la performance au Canada.',
+      keywords:
+        'ProTechWeb, Professionnels des Technologies du Web, agence web Montr\\u00e9al, cr\\u00e9ation site web, d\\u00e9veloppement application web, SEO Montr\\u00e9al, commerce \\u00e9lectronique, agence num\\u00e9rique Qu\\u00e9bec',
+      ogTitle: 'ProTechWeb \\u2013 Professionnels des Technologies du Web',
+      ogDescription:
+        'Experts en strat\\u00e9gie digitale, design et d\\u00e9veloppement pour propulser les entreprises canadiennes.',
+      url: 'https://protechweb.ca/',
+      image: 'https://protechweb.ca/assets/Logo_ProtechWeb.png'
+    },
     // Hero
     hero: {
       welcome: 'Bienvenue chez ProTechWeb',
@@ -393,6 +405,18 @@ export const translations = {
   },
   en: {
     nav: { home: 'Home', services: 'Services', pricing: 'Pricing', contact: 'Contact' },
+    seo: {
+      title: 'ProTechWeb | Web Technology Professionals | Modern Websites & Apps in Canada',
+      description:
+        'ProTechWeb builds conversion-focused websites, web applications, and eCommerce solutions optimized for search for startups, SMBs, and organizations across Canada.',
+      keywords:
+        'ProTechWeb, web agency Canada, Montreal web design, custom website development, SEO agency Montreal, ecommerce development, web applications, digital agency',
+      ogTitle: 'ProTechWeb \\u2013 Web Technology Professionals',
+      ogDescription:
+        'Strategy, design, development, and SEO expertise to launch secure, high-performing digital solutions.',
+      url: 'https://protechweb.ca/',
+      image: 'https://protechweb.ca/assets/Logo_ProtechWeb.png'
+    },
     hero: {
       welcome: 'Welcome to ProTechWeb',
       tagline: 'Web Technology Professionals',

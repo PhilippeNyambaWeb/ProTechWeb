@@ -66,7 +66,7 @@ const Footer = () => {
             <div className="flex space-x-4">
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href="https://www.facebook.com/philippe.nyamba"
+                href="https://www.facebook.com/profile.php?id=61583472042647"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-2 rounded-full hover:bg-secondary transition-colors"
