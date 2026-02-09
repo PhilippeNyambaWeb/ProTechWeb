@@ -13,6 +13,8 @@ const Footer = () => {
   const t = useTranslations(language);
   const { toast } = useToast();
   const [legalModal, setLegalModal] = useState({ isOpen: false, type: null });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formsApiBase = (import.meta.env.VITE_FORMS_API_URL || 'https://api.protechweb.ca').replace(/\/+$/, '');
 
   const openLegalModal = (type) => {
     setLegalModal({ isOpen: true, type });
@@ -27,7 +29,18 @@ const Footer = () => {
     return emailRegex.test(email);
   };
 
-  const handleNewsletterSubmit = (e) => {
+  const resolveTenant = () => {
+    if (typeof window === 'undefined') return null;
+    const tenant = window.location.hostname.replace(/^www\./, '');
+    try {
+      const apiHost = new URL(formsApiBase).hostname;
+      return apiHost === tenant ? null : tenant;
+    } catch {
+      return tenant || null;
+    }
+  };
+
+  const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
 
@@ -39,19 +52,42 @@ const Footer = () => {
       return;
     }
 
-    const subscribers = JSON.parse(localStorage.getItem('newsletter') || '[]');
-    subscribers.push({
-      email,
-      date: new Date().toISOString()
-    });
-    localStorage.setItem('newsletter', JSON.stringify(subscribers));
+    setIsSubmitting(true);
 
-    toast({
-      title: "Inscription réussie ! 🎉",
-      description: "Merci de vous être abonné à notre newsletter.",
-    });
+    try {
+      const apiUrl = `${formsApiBase}/forms/newsletter`;
+      const tenant = resolveTenant();
+      const payload = tenant ? { email, tenant } : { email };
 
-    e.target.reset();
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Une erreur est survenue');
+      }
+
+      toast({
+        title: "Inscription réussie ! 🎉",
+        description: "Merci de vous être abonné à notre newsletter.",
+      });
+
+      e.target.reset();
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue, merci de réessayer plus tard.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -112,9 +148,10 @@ const Footer = () => {
                 name="email"
                 placeholder={t.footer.newsletterPlaceholder}
                 required
+                disabled={isSubmitting}
                 className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-secondary focus:ring-secondary h-11"
               />
-              <GlassButton variant="secondary" type="submit" className="w-full px-6 py-3">
+              <GlassButton variant="secondary" type="submit" className="w-full px-6 py-3" disabled={isSubmitting}>
                 <Mail className="mr-2 h-4 w-4" />
                 <span>{t.footer.subscribe}</span>
               </GlassButton>

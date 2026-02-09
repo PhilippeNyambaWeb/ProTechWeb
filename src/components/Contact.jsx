@@ -27,6 +27,18 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionId, setSubmissionId] = useState('');
+  const formsApiBase = (import.meta.env.VITE_FORMS_API_URL || 'https://api.protechweb.ca').replace(/\/+$/, '');
+
+  const resolveTenant = () => {
+    if (typeof window === 'undefined') return null;
+    const tenant = window.location.hostname.replace(/^www\./, '');
+    try {
+      const apiHost = new URL(formsApiBase).hostname;
+      return apiHost === tenant ? null : tenant;
+    } catch {
+      return tenant || null;
+    }
+  };
 
   useEffect(() => {
     if (formPrefill && (formPrefill.inquiryType || formPrefill.subject || formPrefill.message)) {
@@ -83,15 +95,16 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
+      const apiUrl = `${formsApiBase}/forms/contact`;
+      const tenant = resolveTenant();
+      const payload = tenant ? { ...formData, tenant } : formData;
 
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
